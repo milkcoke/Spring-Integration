@@ -1,3 +1,25 @@
+.idea
+out/
+HELP.md
+build.gradle
+build/
+!gradle/wrapper/gradle-wrapper.jar
+# 소스파일은 포함시켜야함.
+!**/src/main/**
+!**/src/test/**
+
+
+# STS #
+.apt_generated
+.classpath
+.factorypath
+.project
+.settings
+.springBeans
+.sts4-cache
+
+
+
 # Compiled class file
 *.class
 
