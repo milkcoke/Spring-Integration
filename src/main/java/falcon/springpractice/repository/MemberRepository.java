@@ -4,7 +4,6 @@ import falcon.springpractice.domain.Member;
 
 import java.util.List;
 import java.util.Optional;
-
 public interface MemberRepository {
     Member save(Member member);
     // 없으면 null 되는데

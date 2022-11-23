@@ -1,6 +1,7 @@
 package falcon.springpractice.repository;
 
 import falcon.springpractice.domain.Member;
+import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -9,6 +10,7 @@ import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicLong;
 
+@Repository
 public class MemoryMemberRepository implements MemberRepository{
     // static 변수에 대해 동시성 이슈해결을 위해 ConcurrentHashMap 사용
     private static final Map<Long, Member> store = new ConcurrentHashMap<Long, Member>();

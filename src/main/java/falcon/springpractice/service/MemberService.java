@@ -2,15 +2,21 @@ package falcon.springpractice.service;
 
 import falcon.springpractice.domain.Member;
 import falcon.springpractice.repository.MemberRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 
+@Service
 public class MemberService {
     private final MemberRepository memberRepository;
 
     // 외부에서 member repository 를 넣어줌 (DI)
     // 외부에서 넣도록 singleton
+    // 요새는 '생성자 의존성 주입' 방식이 권장된다.
+    // 의존관계가 동적으로 변해야할 상황이 없기 때문이다.
+    @Autowired
     public MemberService(MemberRepository memberRepository) {
         this.memberRepository = memberRepository;
     }
