@@ -1,5 +1,6 @@
 package falcon.springpractice;
 
+import falcon.springpractice.aop.TimeTraceAop;
 import falcon.springpractice.repository.JdbcTemplateMemberRepository;
 import falcon.springpractice.repository.JpaMemberRepository;
 import falcon.springpractice.repository.MemberRepository;
@@ -27,6 +28,12 @@ public class SpringConfig {
         this.memberRepository = memberRepository;
     }
 
+    @Bean
+    public TimeTraceAop timeTraceAop() {
+        // 명시적으로 Spring Bean 에 등록하는게 더 좋음.
+        // (강조를 위해)
+        return new TimeTraceAop();
+    }
     //    @Autowired
 //    public SpringConfig(EntityManager em) {
 //        this.em = em;
