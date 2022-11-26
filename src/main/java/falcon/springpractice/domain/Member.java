@@ -1,8 +1,15 @@
 package falcon.springpractice.domain;
 
+import javax.persistence.*;
+
+@Entity
 public class Member {
     // DB 는 아직 설계 X
+    @Id
+    // DB가 알아서 생성
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+//    @Column(name="username")
     private String name;
 
     public Long getId() {
