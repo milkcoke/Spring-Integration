@@ -9,8 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Getter
-@Setter
+@Getter @Setter
 public class Category {
     @Id @GeneratedValue
     @Column(name = "category_id")
@@ -29,7 +28,7 @@ public class Category {
     )
     private List<Item> items = new ArrayList();
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "parent_category_id")
     private Category parent;
 

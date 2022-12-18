@@ -24,5 +24,6 @@ public class Member {
     // `member` field in order 에 의해 매핑되었다는 것을 명시.
     @OneToMany(mappedBy = "member")
     private List<Order> orders = new ArrayList();
+
 }
 
