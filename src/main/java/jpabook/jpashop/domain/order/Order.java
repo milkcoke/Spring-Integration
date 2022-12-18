@@ -43,4 +43,23 @@ public class Order {
 
     @Enumerated(EnumType.STRING)
     private OrderStatus orderStatus;
+
+
+    // 연관관계 (편의) 메소드
+    // 핵심적으로 컨트롤 하는 쪽이 들고있는 것이 좋다.
+    public void setMember(Member member) {
+        this.member = member; // 1개 order 는 1명의 member 에게 종속된다.
+        member.getOrders().add(this); // member 가 보유한 모든 order 를 추가하는 방식
+    }
+
+    // 양방향 연관관계를 맞추기 위해 원자적으로 메소드 하나로 묶음. (양방향 연결)
+    public void addOrderItem(OrderItem orderItem) {
+        orderItems.add(orderItem);
+        orderItem.setOrder(this);
+    }
+
+    public void setDelivery(Delivery delivery) {
+        this.delivery = delivery;
+        delivery.setOrder(this);
+    }
 }
