@@ -1,20 +1,23 @@
 package jpabook.jpashop.repository.member;
 
 import jakarta.persistence.EntityManager;
-import jakarta.persistence.PersistenceContext;
 import jpabook.jpashop.domain.member.Member;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
 @Repository
+// Autowired 생성자 주입을 final 붙은 애들에만 해준다.
+// SpringBoot 에 의해 PersistenceContext 생략이 가능하다
+@RequiredArgsConstructor
 public class MemberRepository {
 
     // Entity Manager 에 의한 모든 데이터 변경은 항상 트랜잭션 내에서 이뤄져야한다.
     // SpringBoot 가 EntityManager 를 주입해줌.
     // spring-boot-starter-data-jpa 패키지에 의해.
-    @PersistenceContext
-    private EntityManager em;
+//    @PersistenceContext
+    private final EntityManager em;
 
     public Long save(Member member) {
         // DB Insert query 가 날라감.
