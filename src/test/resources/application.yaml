@@ -1,0 +1,30 @@
+# test directory 내에 존재하는
+# memory 전용 DB (default)
+spring:
+  datasource:
+    url: jdbc:h2:mem:test
+    username: sa
+    password:
+    driver-class-name: org.h2.Driver
+
+  jpa:
+    hibernate:
+      # [create, create-drop]
+      # create: drop all entities and start creating entities and execute application
+      # create-drop: Drop all entities before finishing the application.
+      ddl-auto: create
+    properties:
+      hibernate:
+        show_sql: false
+        format_sql: true
+
+server:
+  port: 9000
+
+
+# 이 윗부분은 test package 에서 존재하지 않아도 무관함.
+logging:
+  level:
+    # Hibernate 가 생성하는 SQL 이 모두 보이도록 디버그모드 사용.
+    org.hibernate.SQL: debug
+    org.hibernate.type: trace
