@@ -20,6 +20,11 @@ public class OrderItem {
     @JoinColumn(name = "order_id")
     private Order order;
 
+    // 생성자 메소드만을 사용하여 생성 로직을 통일하게끔
+    // protected 로 일반 생성자 사용을 방지해야한다.
+    protected OrderItem() {
+
+    }
     private int orderPrice; // 주문 당시 가격
     private int orderCnt; // 주문 수량
 
