@@ -2,8 +2,11 @@ package jpabook.jpashop.domain.order;
 
 import jakarta.persistence.*;
 import jpabook.jpashop.domain.delivery.Delivery;
+import jpabook.jpashop.domain.delivery.DeliveryStatus;
 import jpabook.jpashop.domain.member.Member;
+import lombok.AccessLevel;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
@@ -13,6 +16,7 @@ import java.util.List;
 @Entity()
 @Table(name = "orders")
 @Getter @Setter
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Order {
     @Id
     @GeneratedValue
@@ -61,5 +65,48 @@ public class Order {
     public void setDelivery(Delivery delivery) {
         this.delivery = delivery;
         delivery.setOrder(this);
+    }
+
+    /**
+     * 생성 메서드
+     */
+     public static Order createOrder(Member member, Delivery delivery, OrderItem... orderItems) {
+         var order = new Order();
+         order.setMember(member);
+         order.setDelivery(delivery);
+         for (var orderItem : orderItems) {
+             order.addOrderItem(orderItem);
+         }
+         order.setOrderStatus(OrderStatus.ORDER);
+         order.setOrderDatetime(LocalDateTime.now());
+
+         return order;
+     }
+
+    /**
+     * 주문 취소
+     */
+    public void cancel() {
+        if (delivery.getDeliveryStatus() == DeliveryStatus.COMPLETE) {
+            throw new IllegalStateException("이미 배송 완료된 상품은 취소가 불가능합니다.");
+        }
+        this.setOrderStatus(OrderStatus.CANCEL);
+        for (var orderItem : orderItems) {
+            orderItem.cancel();
+        }
+    }
+
+    /**
+     * 전체 주문 가격 조회
+     * 한 주문 내에 여러 주문 상품이 존재할 수 있음.
+     * 모든 주문 상품의 수량과 가격을 곱연산 하는 비즈니스 로직은 OrderItem 에 정의
+     * ex) A책 3권, B책 5권
+     */
+    public int getTotalPrice() {
+        var totalPrice = orderItems.stream()
+                .mapToInt(OrderItem::getTotalPrice)
+                .sum();
+
+        return totalPrice;
     }
 }

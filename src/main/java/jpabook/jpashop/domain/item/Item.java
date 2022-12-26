@@ -2,6 +2,7 @@ package jpabook.jpashop.domain.item;
 
 import jakarta.persistence.*;
 import jpabook.jpashop.domain.category.Category;
+import jpabook.jpashop.exception.NotEnoughStockException;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -28,4 +29,29 @@ public abstract class Item {
 
     @ManyToMany(mappedBy = "items")
     private List<Category> categories = new ArrayList();
+
+    // 재고 증감 비즈니스 로직
+    // DDD 면에서 Entity 내에서 해결할 수 있는 것은
+    // Entity 내에 포함시키는 것이 좋다.
+    // 재고라는 데이터 (property) 를 가진 entity 내에 메소드를 위치하는 것이 좋은 도메인 설계다.
+
+    /**
+     * stock 증가
+     */
+    public void addStock(int stockQuantity) {
+        this.stockQuantity += stockQuantity;
+    }
+
+    /**
+     * stock 감소
+     */
+    public void removeStock(int stockQuantity) {
+        var restStockQuantity = this.stockQuantity - stockQuantity;
+        if (restStockQuantity < 0) {
+            throw new NotEnoughStockException("Need more remain stock quantity");
+        }
+
+        this.stockQuantity = restStockQuantity;
+    }
+
 }

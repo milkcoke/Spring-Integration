@@ -13,10 +13,12 @@ Practice making web application by Spring Framework.
 
 ### Order
 1. Create
-2. Read
+2. Read \
+**Support dynamic query using JPA.** \
+ex) Search by `OrderStatus`, `userName`
 3. Update \
 cancel the order (order status)
-
+ 
 ### etc
 1. Goods require inventory management.
 2. Type of goods consist fo book, audio, movie
