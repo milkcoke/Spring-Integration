@@ -21,6 +21,7 @@ repositories {
 dependencies {
 	// 아래 버전정보 명시가 없는 라이브러리들은 자동으로 springboot 가 버전을 명시하여 받아와줌. (의존성 설정)
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+	implementation 'org.springframework.boot:spring-boot-starter-validation'
 	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	// 개발 편의성을 위한 툴, reloading 에 유리
