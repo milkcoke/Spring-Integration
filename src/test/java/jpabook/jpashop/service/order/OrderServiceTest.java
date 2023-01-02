@@ -85,7 +85,7 @@ class OrderServiceTest {
     }
 
     private Book getBook(String name, int price, int stockQuantity) {
-        var book = new Book();
+        var book = Book.createBook(name, price, stockQuantity, null, null);
         book.setName(name);
         book.setPrice(price);
         book.setStockQuantity(stockQuantity);
