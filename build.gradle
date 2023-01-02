@@ -27,7 +27,7 @@ dependencies {
 	// 개발 편의성을 위한 툴, reloading 에 유리
 	implementation 'org.springframework.boot:spring-boot-devtools'
 	// datasource proxy library
-	implementation 'com.github.gavlyukovskiy:p6spy-spring-boot-starter:latest'
+	implementation 'com.github.gavlyukovskiy:p6spy-spring-boot-starter:1.8.1'
 	runtimeOnly 'com.h2database:h2'
 	compileOnly 'org.projectlombok:lombok'
 	annotationProcessor 'org.projectlombok:lombok'
