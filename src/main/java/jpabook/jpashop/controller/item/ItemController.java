@@ -2,7 +2,6 @@ package jpabook.jpashop.controller.item;
 
 import jpabook.jpashop.domain.item.Book;
 import jpabook.jpashop.domain.item.Item;
-import jpabook.jpashop.repository.item.ItemRepository;
 import jpabook.jpashop.service.item.ItemService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -21,7 +20,6 @@ public class ItemController {
         List<Item> items = itemService.findItems();
         model.addAttribute("items", items);
         return "items/itemList";
-
     }
 
     @GetMapping("/items/new")
@@ -51,9 +49,7 @@ public class ItemController {
     // thymeleaf html 파일에서 object 이름이 그대로 넘어옴
     public String updateItem(@PathVariable String itemId, @ModelAttribute("bookForm") BookForm bookForm) {
         Book book = (Book) itemService.findOneById(Long.parseLong(itemId));
-
         // bookForm 은 대체 ID를 어떻게 가지고 있는거?
-        book.setId(bookForm.getId());
         book.setName(bookForm.getName());
         book.setPrice( bookForm.getPrice());
         book.setStockQuantity(bookForm.getStockQuantity());
