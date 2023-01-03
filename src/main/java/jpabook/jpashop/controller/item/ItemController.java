@@ -47,16 +47,16 @@ public class ItemController {
 
     @PutMapping("items/{itemId}")
     // thymeleaf html 파일에서 object 이름이 그대로 넘어옴
-    public String updateItem(@PathVariable String itemId, @ModelAttribute("bookForm") BookForm bookForm) {
-        Book book = (Book) itemService.findOneById(Long.parseLong(itemId));
-        // bookForm 은 대체 ID를 어떻게 가지고 있는거?
-        book.setName(bookForm.getName());
-        book.setPrice( bookForm.getPrice());
-        book.setStockQuantity(bookForm.getStockQuantity());
-        book.setAuthorName(bookForm.getAuthorName());
-        book.setIsbn(bookForm.getIsbn());
+    public String updateItem(@PathVariable Long itemId, @ModelAttribute("bookForm") BookForm bookForm) {
+        // 당연히 여기서 ID를 품고있어야 하는거 아닌가?
 
-        itemService.saveItem(book);
+
+        // 어설프게 entity 를 controller 에서 생성하지 말것.
+        // Service 단에도 파라미터로 전체 엔티티가 아닌 필요한 property 만 명시하는게 좋다.
+        // 그보다 복잡해질 것 같으면 DTO 를 정의하여 전달하는게 좋다.
+        // TODO
+        //  authorName 과 isbn 을 넘겨 업데이트 하고싶다면 어떻게 처리해야할까?
+        itemService.updateItem(itemId, bookForm.getName(),bookForm.getPrice(), bookForm.getStockQuantity());
         return "redirect:/items";
     }
 
