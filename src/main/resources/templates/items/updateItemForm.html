@@ -1,0 +1,41 @@
+<!DOCTYPE HTML>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/header :: header"></head>
+<body>
+<div class="container">
+  <div th:replace="fragments/bodyHeader :: bodyHeader"></div>
+<!--  Link Url Expression: @, Variable Expression: $-->
+<!--  String to Long 을 "" double quote 내에서 하면 변수가 자동으로 String 으로 casting 되므로 + 로 concatenation -->
+  <form th:object="${bookForm}" data-th-method="put" data-th-action="@{'/items/' + ${bookForm.getId()}}">
+    <!-- id -->
+    <input type="hidden" th:field="*{id}" />
+    <div class="form-group">
+      <label th:for="name">이름</label>
+      <input type="text" th:field="*{name}" class="form-control"
+             placeholder="이름을 입력하세요" />
+    </div>
+    <div class="form-group">
+      <label th:for="price">가격</label>
+      <input type="number" th:field="*{price}" class="form-control"
+             placeholder="가격을 입력하세요" />
+    </div>
+    <div class="form-group">
+      <label th:for="stockQuantity">수량</label>
+      <input type="number" th:field="*{stockQuantity}" class="form-control" placeholder="수량을 입력하세요" />
+    </div>
+    <div class="form-group">
+      <label th:for="author">저자명</label>
+      <input type="text" th:field="*{authorName}" class="form-control"
+             placeholder="저자를 입력하세요" />
+    </div>
+    <div class="form-group">
+      <label th:for="isbn">ISBN</label>
+      <input type="text" th:field="*{isbn}" class="form-control"
+             placeholder="ISBN을 입력하세요" />
+    </div>
+    <button type="submit" class="btn btn-primary">수정 완료</button>
+  </form>
+  <div th:replace="fragments/footer :: footer"></div>
+</div>
+</body>
+</html>

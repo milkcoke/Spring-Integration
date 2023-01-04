@@ -31,7 +31,7 @@ class MemberServiceTest {
     public void 회원가입() {
         // given
         var member = new Member();
-        member.setUserName("Falcon");
+        member.changeMemberInfo("Falcon", null);
 
         // when
         var savedId = memberService.join(member);
@@ -46,16 +46,14 @@ class MemberServiceTest {
     public void 중복_회원_예외() {
         // given
         var member1 = new Member();
-        member1.setUserName("u na kim");
+        member1.changeMemberInfo("u na kim", null);
         var member2 = new Member();
-        member2.setUserName("u na kim");
+        member2.changeMemberInfo("u na kim", null);
         // when
         memberService.join(member1);
 
         // then
-        assertThrows(IllegalStateException.class, () -> {
-            memberService.join(member2);
-        });
+        assertThrows(IllegalStateException.class, () -> memberService.join(member2));
 
     }
 }
