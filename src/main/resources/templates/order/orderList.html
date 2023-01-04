@@ -58,12 +58,20 @@
 </div> <!-- /container -->
 </body>
 <script>
-  function cancel(orderId) {
-    const form = document.createElement("form");
-    form.setAttribute("method", "patch");
-    form.setAttribute("action", "/orders/" + orderId);
-    document.body.appendChild(form);
-    form.submit();
+  async function cancel(orderId) {
+    const requestUrl = "http://localhost:9000/orders/" + orderId;
+    try {
+      const response = await fetch(requestUrl, {
+        method: 'PATCH',
+      });
+      console.dir(response);
+      if (response.redirected) {
+        window.location.href = response.url;
+      }
+
+    } catch (err) {
+      console.error(err);
+    }
   }
 </script>
 </html>
