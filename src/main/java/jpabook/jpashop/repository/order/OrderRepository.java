@@ -23,16 +23,13 @@ public class OrderRepository {
     // static query
     public List<Order> findAll(OrderSearch orderSearch) {
         // how to resolve dynamic query
-        var orders = em.createQuery("SELECT o FROM Order o JOIN o.member m" +
-                " WHERE o.status = :status" +
-                " AND m.name LIKE :name", Order.class)
+        return em.createQuery("SELECT o FROM Order o JOIN Member m" +
+                " WHERE o.orderStatus = :status AND m.userName LIKE :name", Order.class)
                 .setParameter("status", orderSearch.getOrderStatus())
                 .setParameter("name", orderSearch.getMemberName())
                 // LIMIT 1000
                 .setMaxResults(1000)
                 .getResultList();
-
-        return orders;
     }
 
 
