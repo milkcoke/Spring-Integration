@@ -51,6 +51,6 @@ public class OrderController {
     @PatchMapping("/orders/{orderId}")
     public String cancelOrder(@PathVariable("orderId") Long orderId) {
         orderService.cancelOrder(orderId);
-        return "redirect:orders";
+        return "redirect:/orders";
     }
 }
