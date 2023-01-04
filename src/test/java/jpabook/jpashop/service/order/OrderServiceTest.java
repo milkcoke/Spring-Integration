@@ -62,9 +62,7 @@ class OrderServiceTest {
         var orderQuantity = 11;
 
         // then
-        assertThrows(NotEnoughStockException.class, () -> {
-            orderService.order(member.getId(), book.getId(), orderQuantity);
-        });
+        assertThrows(NotEnoughStockException.class, () -> orderService.order(member.getId(), book.getId(), orderQuantity));
     }
 
     @Test
@@ -86,17 +84,14 @@ class OrderServiceTest {
 
     private Book getBook(String name, int price, int stockQuantity) {
         var book = Book.createBook(name, price, stockQuantity, null, null);
-        book.setName(name);
-        book.setPrice(price);
-        book.setStockQuantity(stockQuantity);
         em.persist(book);
         return book;
     }
 
     private Member getMember() {
         var member = new Member();
-        member.setUserName("falcon");
-        member.setAddress(new Address("서울","강남", "15242"));
+        member.changeMemberInfo("falcon", new Address("서울","강남", "15242"));
+
         em.persist(member);
         return member;
     }

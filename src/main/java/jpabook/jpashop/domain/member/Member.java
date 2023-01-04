@@ -4,13 +4,12 @@ import jakarta.persistence.*;
 import jpabook.jpashop.domain.address.Address;
 import jpabook.jpashop.domain.order.Order;
 import lombok.Getter;
-import lombok.Setter;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Getter @Setter
+@Getter
 public class Member {
     @Id @GeneratedValue
     @Column(name = "member_id")
@@ -24,6 +23,11 @@ public class Member {
     // `member` field in order 에 의해 매핑되었다는 것을 명시.
     @OneToMany(mappedBy = "member")
     private List<Order> orders = new ArrayList();
+
+    public void changeMemberInfo(String userName, Address address) {
+        this.userName = userName;
+        this.address = address;
+    }
 
 }
 

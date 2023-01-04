@@ -24,7 +24,7 @@ class MemberRepositoryTest {
     public void testMember() {
         // given
         var member = new Member();
-        member.setUserName("memberA");
+        member.changeMemberInfo("memberA", null);
         memberRepository.save(member);
 
         // when
