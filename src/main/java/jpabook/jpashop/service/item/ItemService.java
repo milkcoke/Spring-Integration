@@ -24,7 +24,7 @@ public class ItemService {
     // @Transactional 에 의해 변경을 감지하고 update query 를 날려준다.
 
 
-    @Transactional
+    @Transactional(readOnly = false)
     // 서비스 계층에 식별자(ID) 와 전달할 데이터를 명확하게 전달하라.
     // 복잡해질 경우 DTO 를 사용하길 권장한다.
     // TODO
