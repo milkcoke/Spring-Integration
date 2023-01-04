@@ -4,7 +4,9 @@
 <body>
 <div class="container">
   <div th:replace="fragments/bodyHeader :: bodyHeader"></div>
-  <form th:object="${bookForm}" method="put">
+<!--  Link Url Expression: @, Variable Expression: $-->
+<!--  String to Long 을 "" double quote 내에서 하면 변수가 자동으로 String 으로 casting 되므로 + 로 concatenation -->
+  <form th:object="${bookForm}" data-th-method="put" data-th-action="@{'/items/' + ${bookForm.getId()}}">
     <!-- id -->
     <input type="hidden" th:field="*{id}" />
     <div class="form-group">
@@ -34,6 +36,6 @@
     <button type="submit" class="btn btn-primary">수정 완료</button>
   </form>
   <div th:replace="fragments/footer :: footer"></div>
-</div> <!-- /container -->
+</div>
 </body>
 </html>

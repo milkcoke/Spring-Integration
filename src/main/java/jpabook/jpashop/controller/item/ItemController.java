@@ -1,19 +1,21 @@
 package jpabook.jpashop.controller.item;
 
+import java.util.List;
 import jpabook.jpashop.domain.item.Book;
 import jpabook.jpashop.domain.item.Item;
+import jpabook.jpashop.service.item.BookService;
 import jpabook.jpashop.service.item.ItemService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
 public class ItemController {
     private final ItemService itemService;
+    private final BookService bookService;
 
     @GetMapping("/items")
     public String items(Model model) {
@@ -54,9 +56,7 @@ public class ItemController {
         // 어설프게 entity 를 controller 에서 생성하지 말것.
         // Service 단에도 파라미터로 전체 엔티티가 아닌 필요한 property 만 명시하는게 좋다.
         // 그보다 복잡해질 것 같으면 DTO 를 정의하여 전달하는게 좋다.
-        // TODO
-        //  authorName 과 isbn 을 넘겨 업데이트 하고싶다면 어떻게 처리해야할까?
-        itemService.updateItem(itemId, bookForm.getName(),bookForm.getPrice(), bookForm.getStockQuantity());
+        bookService.updateBook(itemId, bookForm.getName(), bookForm.getPrice(), bookForm.getStockQuantity(), bookForm.getAuthorName(), bookForm.getIsbn());
         return "redirect:/items";
     }
 
