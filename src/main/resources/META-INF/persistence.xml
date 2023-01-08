@@ -20,7 +20,8 @@
             <property name="hibernate.id.new_generator_mappings" value="true"/>
 
             <property name="hibernate.hbm2ddl.auto" value="validate" />
-            <property name="hibernate.ejb.naming_strategy" value="org.hibernate.cfg.ImprovedNamingStrategy"/>
+            <!-- You can choose Implicit or Physical naming strategy -->
+            <property name="hibernate.physical_naming_strategy" value="jpa.policy.LowerSnakeCasePhysicalNamingStrategy"/>
         </properties>
     </persistence-unit>
 </persistence>
