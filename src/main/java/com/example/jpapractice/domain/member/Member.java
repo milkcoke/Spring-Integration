@@ -5,6 +5,9 @@ import jakarta.transaction.Transactional;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.Comment;
+
+import java.util.Date;
 
 
 @Entity
@@ -21,14 +24,33 @@ public class Member {
     private Long id;
     @Column(name = "member_name")
     private String name;
+    private Integer  age;
+
+    @Enumerated(EnumType.STRING)
+    private RoleType roleType;
+
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date createDate;
+
+    @Temporal(TemporalType.TIMESTAMP)
+    @Comment("최종 수정 시각")
+    private Date lastModifiedDate;
+
+    @Lob
+    @Comment("비고 설명")
+    private String description;
 
     public static Member registerMember(String name) {
         var member = new Member();
         member.name = name;
+        member.createDate = new Date();
+        member.roleType = RoleType.USER;
         return member;
     }
     @Transactional
-    public void changeMemberInfo(String name) {
+    public void changeMemberInfo(String name, Integer age) {
         this.name = name;
+        this.age = age;
+        this.lastModifiedDate = new Date();
     }
 }
