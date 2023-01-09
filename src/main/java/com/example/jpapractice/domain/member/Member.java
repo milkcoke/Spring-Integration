@@ -18,15 +18,21 @@ import java.time.LocalDateTime;
 public class Member {
     // javax 또는 jakarta 가 JPA 표준 인터페이스
     // Hibernate 은 구현체.
-
     // JPA 에서는 데이터 변경시 항상 Transaction 안에서 작업해야한다.
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @Column(name = "member_id")
     private Long id;
-    @Column(name = "member_name", updatable = true, nullable = false, length = 511)
+    @Column(name = "member_name", updatable = true, nullable = false, length = 255)
     private String name;
     private Integer  age;
+
+    @Column(length = 63)
+    private String city;
+    @Column(length = 63)
+    private String street;
+    @Column(length = 31)
+    private String zipcode;
 
     @Enumerated(EnumType.STRING)
     private RoleType roleType;
