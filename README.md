@@ -30,6 +30,8 @@ You need to set up before entering project.
 - DDL 은 스크립트를 직접 작성해서 테스트 DB 에 먼저 테스트 한 후 반영하라. \
 자동으로 툴이 생성해주는 DDL 에는 위험이 존재한다.
 - ALTER, DROP 같은 DDL 은 애초에 개발자가 쓰지 못하게 계정 단위로 잠궈놓는다.
+- 최대한 많은 어노테이션을 사용하여 Entity class 내에서 컬럼 정보를 정확히 개발자가 알아볼 수 있게 명시하라. \
+그렇지 않으면 직접 DB DDL 을 확인해야해서 번거롭다.
 
 ## Entity - Table mapping guide
 
