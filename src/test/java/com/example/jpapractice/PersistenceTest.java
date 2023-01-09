@@ -26,7 +26,7 @@ class PersistenceTest {
             tx.begin();
 //          Cache miss -> write member having id `2L` to persistence context
             var member = em.find(Member.class, 2L);
-            member.changeMemberInfo("Narr");
+            member.changeMemberInfo("Narr", 20);
 
             // 영속 -> 준영속 컨텍스트
 //            em.detach(member);
