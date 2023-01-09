@@ -2,15 +2,16 @@ package com.example.jpapractice.domain.member;
 
 import jakarta.persistence.*;
 import jakarta.transaction.Transactional;
+import jakarta.validation.constraints.NotNull;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.Comment;
-
-import java.util.Date;
+import java.time.LocalDateTime;
 
 
 @Entity
+// uniqueConstraints = @UniqueConstraint(columnNames = {"member_name"})
 @Table(name = "member")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
@@ -19,22 +20,26 @@ public class Member {
     // Hibernate 은 구현체.
 
     // JPA 에서는 데이터 변경시 항상 Transaction 안에서 작업해야한다.
-    @Id @GeneratedValue
+    @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @Column(name = "member_id")
     private Long id;
-    @Column(name = "member_name")
+    @Column(name = "member_name", updatable = true, nullable = false, length = 511)
     private String name;
     private Integer  age;
 
     @Enumerated(EnumType.STRING)
     private RoleType roleType;
 
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date createDate;
+    // ColumnDefinition 를 할 수도 있지만 권장하지 않음.
+    // 특정 DB Dialect 와 호환되야하므로 쓸 때 유의해야함.
+    @Column(columnDefinition = "TIMESTAMP default CURRENT_TIMESTAMP", updatable = false)
+    @NotNull
+    private LocalDateTime createDate;
 
-    @Temporal(TemporalType.TIMESTAMP)
+//    LocalDate 및 LodalDateTime 은 자동으로 java 8 부터 어노테이션 없어도 됨.
     @Comment("최종 수정 시각")
-    private Date lastModifiedDate;
+    private LocalDateTime lastModifiedDate;
 
     @Lob
     @Comment("비고 설명")
@@ -43,14 +48,24 @@ public class Member {
     public static Member registerMember(String name) {
         var member = new Member();
         member.name = name;
-        member.createDate = new Date();
         member.roleType = RoleType.USER;
         return member;
     }
+
+//    Q. 생성자나 커스텀 메소드 말고 다음과 같이 쓰는게 더 낫겠지?
+    @PrePersist()
+    public void prePersist() {
+        this.createDate = LocalDateTime.now();
+    }
+
+    @PreUpdate()
+    public void preUpdate() {
+        this.lastModifiedDate = LocalDateTime.now();
+    }
+
     @Transactional
     public void changeMemberInfo(String name, Integer age) {
         this.name = name;
         this.age = age;
-        this.lastModifiedDate = new Date();
     }
 }
