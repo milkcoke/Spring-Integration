@@ -1,5 +1,6 @@
 package com.example.jpapractice.domain.member;
 
+import com.example.jpapractice.domain.team.Team;
 import jakarta.persistence.*;
 import jakarta.transaction.Transactional;
 import jakarta.validation.constraints.NotNull;
@@ -26,6 +27,10 @@ public class Member {
     @Column(name = "member_name", updatable = true, nullable = false, length = 255)
     private String name;
     private Integer  age;
+
+    @ManyToOne
+    @JoinColumn(name = "team_id")
+    private Team team;
 
     @Column(length = 63)
     private String city;
@@ -73,5 +78,14 @@ public class Member {
     public void changeMemberInfo(String name, Integer age) {
         this.name = name;
         this.age = age;
+    }
+
+    /**
+     * 연관관계 편의 메소드
+     * @param team
+     */
+    public void changeMemberTeam(Team team) {
+        this.team = team;
+        team.getMembers().add(this);
     }
 }

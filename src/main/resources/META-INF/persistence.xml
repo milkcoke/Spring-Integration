@@ -8,6 +8,7 @@
         <class>com.example.jpapractice.domain.order.Order</class>
         <class>com.example.jpapractice.domain.order.OrderItem</class>
         <class>com.example.jpapractice.domain.item.Item</class>
+        <class>com.example.jpapractice.domain.team.Team</class>
         <properties>
             <!-- 필수 속성 -->
             <property name="javax.persistence.jdbc.driver" value="org.h2.Driver"/>
