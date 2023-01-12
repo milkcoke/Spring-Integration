@@ -1,5 +1,6 @@
 package com.example.jpapractice.domain.order;
 
+import com.example.jpapractice.domain.delivery.Delivery;
 import com.example.jpapractice.domain.member.Member;
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -32,6 +33,10 @@ public class Order {
 
     @Enumerated(EnumType.STRING)
     private OrderStatus status;
+
+    @OneToOne
+    @JoinColumn(name = "delivery_id", unique = true)
+    private Delivery delivery;
 
     /**
      * 연관관계 편의 메소드

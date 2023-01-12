@@ -35,12 +35,6 @@ public class Member {
     @OneToOne
     @JoinColumn(name = "locker_id", unique = true)
     private Locker locker;
-    @Column(length = 63)
-    private String city;
-    @Column(length = 63)
-    private String street;
-    @Column(length = 31)
-    private String zipcode;
 
     @Enumerated(EnumType.STRING)
     private RoleType roleType;
