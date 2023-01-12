@@ -1,6 +1,7 @@
 package com.example.jpapractice.domain.member;
 
 import com.example.jpapractice.domain.team.Team;
+import com.example.jpapractice.domain.locker.Locker;
 import jakarta.persistence.*;
 import jakarta.transaction.Transactional;
 import jakarta.validation.constraints.NotNull;
@@ -31,7 +32,9 @@ public class Member {
     @ManyToOne
     @JoinColumn(name = "team_id")
     private Team team;
-
+    @OneToOne
+    @JoinColumn(name = "locker_id", unique = true)
+    private Locker locker;
     @Column(length = 63)
     private String city;
     @Column(length = 63)
@@ -87,5 +90,9 @@ public class Member {
     public void changeMemberTeam(Team team) {
         this.team = team;
         team.getMembers().add(this);
+    }
+
+    public void changeMemberLocker(Locker locker) {
+        this.locker = locker;
     }
 }
