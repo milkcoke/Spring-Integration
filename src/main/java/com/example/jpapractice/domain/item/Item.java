@@ -1,9 +1,13 @@
 package com.example.jpapractice.domain.item;
 
+import com.example.jpapractice.domain.category.Category;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter
@@ -17,6 +21,11 @@ public class Item {
     @Column(name = "item_name")
     private String name;
 
+    @OneToMany(mappedBy = "item")
+    @Column(name = "item_category_id")
+    private List<ItemCategory> itemCategories = new ArrayList<>();
+
+
     public Item(String name) {
         this.name = name;
     }
@@ -26,5 +35,9 @@ public class Item {
     public void updateItemInfo(int price, int stockQuantity) {
         this.price = price;
         this.stockQuantity = stockQuantity;
+    }
+
+    public void addItemCategory(ItemCategory itemCategory) {
+        itemCategories.add(itemCategory);
     }
 }
