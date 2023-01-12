@@ -176,6 +176,11 @@ public void changeMemberTeam(Team team) {
 ### 5. Controller 에서 Entity 를 그대로 return 하지 않고 DTO 를 사용하길 권장.
 Entity 를 그대로 리턴한다는 것은 Entity 컬럼 변경시 API spec 이 같이 변할 수 있다.
 
+### 6. @ManyToMany 대신 맵핑 테이블을 사용하고 PK는 고유의 값으로만 지정.
+item_id 와 order_id 등을 합쳐 복합키를 기본키로 지정할 수도 있으나 \
+정합성에만 좋을 뿐 실제 애플리케이션 운영면에서는 스키마 변경이 종속성으로 인해 매우 어려워지기 때문에 \
+비즈니스상 의미 없더라도 별도의 order_item_id 를 `auto_increment` 로 걸길 추천한다.
 
+![order_item.png](src/main/resources/assets/mapping_table_erd.png)
 
 
