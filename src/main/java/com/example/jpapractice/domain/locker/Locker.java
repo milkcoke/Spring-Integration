@@ -11,6 +11,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Locker {
     @Id @GeneratedValue
+    @Column(name = "locker_id")
     private Long id;
 
     @Column(name = "locker_name")
