@@ -1,5 +1,6 @@
 package com.example.jpapractice.domain.order;
 
+import com.example.jpapractice.domain.BaseEntity;
 import com.example.jpapractice.domain.delivery.Delivery;
 import com.example.jpapractice.domain.member.Member;
 import jakarta.persistence.*;
@@ -14,7 +15,7 @@ import java.util.List;
 @Getter
 // Use plural `orders` instead of `order` since there's probability by `ORDER BY` Syntax error
 @Table(name = "orders")
-public class Order {
+public class Order extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @Column(name = "order_id")

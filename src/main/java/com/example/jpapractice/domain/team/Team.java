@@ -1,5 +1,6 @@
 package com.example.jpapractice.domain.team;
 
+import com.example.jpapractice.domain.BaseEntity;
 import com.example.jpapractice.domain.member.Member;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
@@ -12,7 +13,7 @@ import java.util.List;
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class Team {
+public class Team extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @Column(name = "team_id")

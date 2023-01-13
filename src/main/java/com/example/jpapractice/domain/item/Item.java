@@ -1,5 +1,6 @@
 package com.example.jpapractice.domain.item;
 
+import com.example.jpapractice.domain.BaseEntity;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -15,7 +16,7 @@ import java.util.List;
 // Item 만 봐서 어떤 서브타입으로 매핑해야할지 알기 위해서는 필요하다.
 // 관례상 기본값인 'dtype'을 사용한다.
 @DiscriminatorColumn(name = "data_type")
-public class Item {
+public class Item extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @Column(name = "item_id")
@@ -26,7 +27,7 @@ public class Item {
 
     @OneToMany(mappedBy = "item")
     @Column(name = "item_category_id")
-    private List<ItemCategory> itemCategories = new ArrayList<>();
+    private final List<ItemCategory> itemCategories = new ArrayList<>();
 
 
     public Item(String name) {

@@ -1,5 +1,6 @@
 package com.example.jpapractice.domain.category;
 
+import com.example.jpapractice.domain.BaseEntity;
 import com.example.jpapractice.domain.item.ItemCategory;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
@@ -12,7 +13,7 @@ import java.util.List;
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class Category {
+public class Category extends BaseEntity {
     @Id
     @GeneratedValue
     @Column(name = "category_id")
