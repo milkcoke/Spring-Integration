@@ -183,4 +183,19 @@ item_id 와 order_id 등을 합쳐 복합키를 기본키로 지정할 수도 �
 
 ![order_item.png](src/main/resources/assets/mapping_table_erd.png)
 
+### 7. MappedSuperclass 적극 활용
+다음 프로퍼티는 BaseEntity 에 포함시켜 상속받아 쓰는것이 운영 측면에서 좋다.
+- createdBy
+- createdTimestamp
+- lastModifiedBy
+- lastModifiedTimestamp
+
+### 8. 상속관계 매핑은 기본적으로 `JOINED` or `SINGLE_TABLE` 전략 사용
+JOINED 가 가장 정규화 되어있고 적은 스토리지로 높은 정합성을 보장하나 테이블 갯수와 쿼리 복잡도 증가 \
+하루에 데이터가 100만건 이상 쌓이고 누적 레코드가 1억건 이상으로 Partitioning 등 이슈가 많아질 경우엔 \
+SINGLE_TABLE 을 사용하여 단순한 테이블 스키마 구조를 택하는 것이 유리할 수 있음. \
+**절대적인 정답은 없다.**
+
+
+
 

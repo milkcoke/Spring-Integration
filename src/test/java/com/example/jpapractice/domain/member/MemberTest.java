@@ -18,9 +18,10 @@ class MemberTest {
     void 회원가입_테스트() {
 
         var tx = getEntityTransaction();
+        tx.begin();
 
         try {
-            tx.begin();
+
             var member = Member.registerMember("크리링");
             em.persist(member);
 //            var targetMember = em.find(Member.class, 1L);
@@ -29,8 +30,6 @@ class MemberTest {
 //            DDL 에 의해 설정된 'Default' 값들 또한 적용되지 않은 상태
             // 실제로 flush 를 통해 데이터를 밀어 넣어야 DDL 의 default 값들을 반영함.
 
-//            em.flush(); // 여기서 밀어 넣기만하면 차이 뭔지 감지못함
-//            System.out.println(targetMember.getCreateDate());
 
             tx.commit();
         } catch (Exception e) {
@@ -39,8 +38,6 @@ class MemberTest {
         } finally {
             em.close();
         }
-
-
     }
 
     @Test

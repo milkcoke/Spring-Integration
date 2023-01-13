@@ -53,8 +53,8 @@ class BookTest {
         } finally {
             em.close();
         }
-
     }
+
     private EntityTransaction getEntityTransaction() {
         this.em = emf.createEntityManager();
         return em.getTransaction();
