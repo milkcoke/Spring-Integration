@@ -1,6 +1,5 @@
 package com.example.jpapractice.domain.item;
 
-import com.example.jpapractice.domain.category.Category;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -12,6 +11,10 @@ import java.util.List;
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@Inheritance(strategy = InheritanceType.JOINED)
+// Item 만 봐서 어떤 서브타입으로 매핑해야할지 알기 위해서는 필요하다.
+// 관례상 기본값인 'dtype'을 사용한다.
+@DiscriminatorColumn(name = "data_type")
 public class Item {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)

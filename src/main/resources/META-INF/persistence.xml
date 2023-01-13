@@ -13,6 +13,9 @@
 
         <class>com.example.jpapractice.domain.item.Item</class>
         <class>com.example.jpapractice.domain.item.ItemCategory</class>
+        <class>com.example.jpapractice.domain.item.Album</class>
+        <class>com.example.jpapractice.domain.item.Movie</class>
+        <class>com.example.jpapractice.domain.item.Book</class>
         <class>com.example.jpapractice.domain.team.Team</class>
         <class>com.example.jpapractice.domain.category.Category</class>
 
