@@ -34,5 +34,15 @@ public class Team extends BaseEntity {
     void changeTeamName(String name) {
         this.name = name;
     }
+
+    @PrePersist()
+    public void prePersist() {
+        this.updateCreateTimestamp(this.getName());
+    }
+
+    @PreUpdate()
+    public void preUpdate() {
+        this.updateModifiedTimestamp(this.getName());
+    }
 }
 
