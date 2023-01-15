@@ -182,6 +182,28 @@ public class MemberTeamRelationTest {
             em.close();
         }
     }
+
+
+    @Test
+    void fetchLazyMember() {
+        var tx = getEntityTransaction();
+        tx.begin();
+        try {
+            var member = em.find(Member.class, 1L);
+            // 엔티티 객체로 멤버 정보만 가져옴.
+            System.out.println(member.getClass());
+            // 프록시를 불러옴
+            System.out.println(member.getTeam().getClass());
+            // 팀에 대해 쿼리를 날림.
+            System.out.println(member.getTeam().getName());
+            tx.commit();
+        } catch (Exception e) {
+            tx.rollback();
+            e.printStackTrace();
+        } finally {
+            em.close();
+        }
+    }
     private EntityTransaction getEntityTransaction() {
         this.em = emf.createEntityManager();
         return em.getTransaction();
