@@ -114,6 +114,74 @@ public class MemberTeamRelationTest {
         }
     }
 
+    @Test()
+    void proxyNotInitialize() {
+        var tx = getEntityTransaction();
+        tx.begin();
+
+        try {
+            var referenceMember = em.getReference(Member.class, 1L);
+            em.detach(referenceMember); // 준영속 컨텍스트로 전환
+            System.out.println(referenceMember.getName()); // 영속성 컨텍스트에서 관리되지 않는 프록시 사용 시도
+            tx.commit();
+        } catch (Exception e) {
+            tx.rollback();
+            e.printStackTrace();
+        } finally {
+            em.close();
+        }
+    }
+
+    @Test()
+    void firstFindSecondGetReference() {
+        var tx = getEntityTransaction();
+        tx.begin();
+        try {
+
+            // Entity 조회 후 getReference 시 실제 Entity object 반환
+            var foundMember = em.find(Member.class, 1L);
+            System.out.println("foundMember class: " + foundMember.getClass());
+
+
+            var referenceMember = em.getReference(Member.class, 1L);
+            System.out.println("Member class: " + referenceMember.getClass());
+
+            System.out.println(referenceMember.getClass() == foundMember.getClass());
+            System.out.println(referenceMember instanceof Member);
+            tx.commit();
+        } catch (Exception e) {
+            tx.rollback();
+            e.printStackTrace();
+        } finally {
+            em.close();
+        }
+    }
+
+    @Test()
+    void firstGetReferenceSecondFind() {
+        var tx = getEntityTransaction();
+        tx.begin();
+        try {
+
+
+            var referenceMember = em.getReference(Member.class, 1L);
+            System.out.println("referenceMember class: " + referenceMember.getClass());
+            System.out.println(referenceMember.getName());
+
+            // Entity 조회 후 getReference 시 실제 Entity object 반환
+            var foundMember = em.find(Member.class, 1L);
+            System.out.println("foundMember class: " + foundMember.getClass());
+
+            System.out.println(referenceMember.getClass() == foundMember.getClass());
+            System.out.println(referenceMember instanceof Member);
+            tx.commit();
+        } catch (Exception e) {
+            tx.rollback();
+            e.printStackTrace();
+        } finally {
+            em.close();
+        }
+    }
     private EntityTransaction getEntityTransaction() {
         this.em = emf.createEntityManager();
         return em.getTransaction();
