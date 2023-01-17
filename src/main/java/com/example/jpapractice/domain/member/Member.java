@@ -80,9 +80,13 @@ public class Member extends BaseEntity {
      * 연관관계 편의 메소드
      * @param team
      */
-    public void changeMemberTeam(Team team) {
+    public void registerTeam(Team team) {
         this.team = team;
         team.getMembers().add(this);
+    }
+
+    public void changeTeam(Team team) {
+        this.team =team;
     }
 
     public void changeMemberLocker(Locker locker) {
