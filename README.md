@@ -196,6 +196,26 @@ JOINED 가 가장 정규화 되어있고 적은 스토리지로 높은 정합성
 SINGLE_TABLE 을 사용하여 단순한 테이블 스키마 구조를 택하는 것이 유리할 수 있음. \
 **절대적인 정답은 없다.**
 
+### 9. 엔티티가 특정 엔티티에만 종속적이고 완전히 생명주기를 같이할 때 `CASCADE` 옵션 사용
+CASCADE 는 부모 엔티티의 영속성 상태를 자식 엔티티에 전이시킨다.
+![cascade when to use](src/main/resources/assets/cascade_when_to_use.gif)
 
+### 9-1. 고아 객체 (부모 엔티티)를 부모와 함께 삭제처리 하고싶다면 `orphanRemoval` 옵션을 부모쪽에 사용
+`CASCADE`와 `orphanRemoval` 옵션을 동시에 사용하면 완전히 생명주기를 같이하는 로직을 구성할 수 있다.
+테이블 관점에서 보면 `orphanRomoval` 은 자식 테이블의 FK가 NULL 상태가 되는 시점에 삭제를 강제하는 (ON DELETE 와 유사) 액션 여부이다.
+
+#### Team.java
+```java
+public class Team extends BaseEntity {
+    // 
+    @OneToMany(mappedBy = "team", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Member> members = new ArrayList<>();
+}
+```
+
+| 행위와 옵션         | CASCADE.REMOVAL    | orphanRemoval = true |
+|----------------|--------------------|----------------------|
+| 부모 엔티티 삭제      | 자식 엔티티 삭제 (영속성 전이) | 자식 엔티티 삭제 (고아 상태가 됨) |
+| 부모에서 자식 엔티티 삭제 | 단독으로는 자식 엔티티 삭제 X  | 단독으로 자식 엔티티 삭제 O     |
 
 

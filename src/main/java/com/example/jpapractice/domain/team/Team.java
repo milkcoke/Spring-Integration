@@ -24,7 +24,9 @@ public class Team extends BaseEntity {
 
     // 부모쪽에 mappedBy 입력
     // 자식쪽의 멤버명을 적어주면 됨.
-    @OneToMany(mappedBy = "team", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "team",
+            cascade = CascadeType.PERSIST,
+            orphanRemoval = true)
     private List<Member> members = new ArrayList<>();
 
     public Team(String name) {

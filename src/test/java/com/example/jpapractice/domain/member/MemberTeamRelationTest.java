@@ -271,7 +271,7 @@ public class MemberTeamRelationTest {
     }
 
 
-    @DisplayName("orphanRemoval = true without CASCADE 옵션 => 컬렉션에서 멤버만 삭제하는 경우")
+    @DisplayName("orphanRemoval = true CASCADE.PERSIST 옵션 => 컬렉션에서 멤버만 삭제하는 경우")
     @Test
     void removeMemberFromTeamWithOrphanStatusTest() {
         var tx = getEntityTransaction();
@@ -287,12 +287,9 @@ public class MemberTeamRelationTest {
 
             em.persist(team);
 
-            // next 2 lines code is needed if only `orphanRemoval` option true and CASCADE is not specified.
-            em.persist(member1);
-            em.persist(member2);
-
             em.flush();
             em.clear();
+
             var foundTeam = em.find(Team.class, 1L);
             // CASCADE not related to collection
             // but orphanRemoval is affect on child entity.
