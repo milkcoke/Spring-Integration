@@ -5,11 +5,12 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.EntityTransaction;
 import jakarta.persistence.Persistence;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
-import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
 
 public class MemberTeamRelationTest {
     private final EntityManagerFactory emf = Persistence.createEntityManagerFactory("jpa-practice");
@@ -29,14 +30,14 @@ public class MemberTeamRelationTest {
             em.persist(team2);
 
             Member member = Member.registerMember("이천수");
-            member.changeMemberTeam(team);
+            member.registerTeam(team);
             em.persist(member);
 
             Member foundMember = em.find(Member.class, member.getId());
             assertThat(foundMember.getTeam().getId()).isEqualTo(foundTeam1.getId());
             assertThat(foundMember.getTeam().getName()).isEqualTo(foundTeam1.getName());
 
-            member.changeMemberTeam(team2);
+            member.registerTeam(team2);
 
             tx.commit();
         } catch (Exception e) {
@@ -87,7 +88,7 @@ public class MemberTeamRelationTest {
             var team = new Team("전사들");
 
             team.getMembers().add(member); // 1
-            member.changeMemberTeam(team); // 2
+            member.registerTeam(team); // 2
 
             em.persist(member);
             em.persist(team);
@@ -197,6 +198,108 @@ public class MemberTeamRelationTest {
             // 팀에 대해 쿼리를 날림.
             System.out.println(member.getTeam().getName());
             tx.commit();
+        } catch (Exception e) {
+            tx.rollback();
+            e.printStackTrace();
+        } finally {
+            em.close();
+        }
+    }
+
+    @Test
+    void registerMemberToTeamTest() {
+        var tx = getEntityTransaction();
+        tx.begin();
+
+        try {
+            var member1 = Member.registerMember("나르");
+            var member2 = Member.registerMember("가렌");
+
+            var team = new Team("LOL");
+            team.registerMember(member1);
+            team.registerMember(member2);
+
+            em.persist(team);
+
+            em.flush();
+            em.clear();
+
+            var foundTeam = em.find(Team.class, 1L);
+            // CASCADE.REMOVE && em.remove => related members are removed too.
+            em.remove(foundTeam);
+
+            tx.commit();
+
+        } catch (Exception e) {
+            tx.rollback();
+            e.printStackTrace();
+        } finally {
+            em.close();
+        }
+    }
+
+    @Test
+    void removeTeamMemberTest() {
+        var tx = getEntityTransaction();
+        tx.begin();
+
+        try {
+            var member1 = Member.registerMember("나르");
+            var member2 = Member.registerMember("가렌");
+
+            var team = new Team("LOL");
+            team.registerMember(member1);
+            team.registerMember(member2);
+
+            em.persist(team);
+
+            em.flush();
+            em.clear();
+
+            var foundTeam = em.find(Team.class, 1L);
+            // CASCADE.REMOVE && Collection element => Not erased!
+
+            foundTeam.getMembers().remove(0);
+            tx.commit();
+
+        } catch (Exception e) {
+            tx.rollback();
+            e.printStackTrace();
+        } finally {
+            em.close();
+        }
+    }
+
+
+    @DisplayName("orphanRemoval = true without CASCADE 옵션 => 컬렉션에서 멤버만 삭제하는 경우")
+    @Test
+    void removeMemberFromTeamWithOrphanStatusTest() {
+        var tx = getEntityTransaction();
+        tx.begin();
+
+        try {
+            var member1 = Member.registerMember("나르");
+            var member2 = Member.registerMember("가렌");
+
+            var team = new Team("LOL");
+            team.registerMember(member1);
+            team.registerMember(member2);
+
+            em.persist(team);
+
+            // next 2 lines code is needed if only `orphanRemoval` option true and CASCADE is not specified.
+            em.persist(member1);
+            em.persist(member2);
+
+            em.flush();
+            em.clear();
+            var foundTeam = em.find(Team.class, 1L);
+            // CASCADE not related to collection
+            // but orphanRemoval is affect on child entity.
+            foundTeam.getMembers().remove(0);
+
+            tx.commit();
+
         } catch (Exception e) {
             tx.rollback();
             e.printStackTrace();
