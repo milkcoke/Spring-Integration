@@ -29,7 +29,7 @@ public class Order extends BaseEntity {
 
     // 양방향 연관관계는 권장되지 않지만 비즈니스 로직상
     // 주문으로부터 주문 상품을 조회하는 것은 자주 쓰이고 의미가 있음.
-    @OneToMany(mappedBy = "order")
+    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
     private List<OrderItem> orderItems = new ArrayList<>();
     @NonNull
     private LocalDateTime orderDate;
@@ -37,7 +37,7 @@ public class Order extends BaseEntity {
     @Enumerated(EnumType.STRING)
     private OrderStatus status;
 
-    @OneToOne(fetch = LAZY)
+    @OneToOne(fetch = LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "delivery_id", unique = true)
     private Delivery delivery;
 
