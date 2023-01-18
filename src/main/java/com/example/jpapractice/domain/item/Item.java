@@ -44,4 +44,14 @@ public class Item extends BaseEntity {
     public void addItemCategory(ItemCategory itemCategory) {
         itemCategories.add(itemCategory);
     }
+
+    @PrePersist()
+    public void prePersist() {
+        this.updateCreateTimestamp("");
+    }
+
+    @PreUpdate()
+    public void preUpdate() {
+        this.updateModifiedTimestamp("");
+    }
 }

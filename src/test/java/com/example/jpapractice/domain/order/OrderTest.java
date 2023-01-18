@@ -51,17 +51,17 @@ class OrderTest {
         order.addOrderItems(orderItemApple);
 
         order.mappingMember(member);
-        // order 먼저 추가해도 문제 안생기나? (부모쪽인데?)
+
         em.persist(order);
         em.persist(orderItemApple);
         em.persist(orderItemBanana);
+
         tx.commit();
     }
 
     @Test
     void orderScenarioTest() {
         var tx = getEntityTransaction();
-
 
         try {
             tx.begin();

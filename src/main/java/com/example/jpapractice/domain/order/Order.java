@@ -55,8 +55,18 @@ public class Order extends BaseEntity {
     }
 
     @PrePersist
-    void PrePersist() {
+    void prePersist() {
         this.orderDate = LocalDateTime.now();
-        if (this.member != null) this.status = OrderStatus.ORDER;
+        if (member != null) {
+            this.updateCreateTimestamp(member.getName());
+            this.status = OrderStatus.ORDER;
+        }
     }
+
+
+    @PreUpdate()
+    void preUpdate() {
+        this.updateModifiedTimestamp(member.getName());
+    }
+
 }
