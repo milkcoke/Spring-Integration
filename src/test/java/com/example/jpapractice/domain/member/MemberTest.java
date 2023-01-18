@@ -138,6 +138,25 @@ class MemberTest {
         }
     }
 
+    @Test
+    void registerAddress() {
+        var tx = getEntityTransaction();
+        tx.begin();
+
+        try {
+            var member = Member.registerMember("카르마");
+            var address = new Address("Republic of Korea", "서울", "강남대로 15", "2932192");
+            member.changeHomeAddress(address);
+
+            em.persist(member);
+            tx.commit();
+        } catch (Exception e) {
+            tx.rollback();
+            e.printStackTrace();
+        } finally {
+            em.close();
+        }
+    }
 
     private EntityTransaction getEntityTransaction() {
         this.em = emf.createEntityManager();
