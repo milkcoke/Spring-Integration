@@ -10,6 +10,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.Comment;
 
+import static jakarta.persistence.FetchType.LAZY;
+
 
 @Entity
 // uniqueConstraints = @UniqueConstraint(columnNames = {"member_name"})
@@ -28,10 +30,10 @@ public class Member extends BaseEntity {
     private String name;
     private Integer  age;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = LAZY)
     @JoinColumn(name = "team_id")
     private Team team;
-    @OneToOne
+    @OneToOne(fetch = LAZY)
     @JoinColumn(name = "locker_id", unique = true)
     private Locker locker;
 
