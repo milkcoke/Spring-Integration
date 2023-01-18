@@ -30,6 +30,9 @@ public class Member extends BaseEntity {
     private String name;
     private Integer  age;
 
+    @Embedded
+    private Address address;
+
     @ManyToOne(fetch = LAZY)
     @JoinColumn(name = "team_id")
     private Team team;
@@ -78,6 +81,9 @@ public class Member extends BaseEntity {
         this.age = age;
     }
 
+    public void changeHomeAddress(Address address) {
+        this.address = address;
+    }
     /**
      * 연관관계 편의 메소드
      * @param team
