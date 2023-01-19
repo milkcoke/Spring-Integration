@@ -4,6 +4,7 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.EntityTransaction;
 import jakarta.persistence.Persistence;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.*;
@@ -147,6 +148,29 @@ class MemberTest {
             var member = Member.registerMember("카르마");
             var address = new Address("Republic of Korea", "서울", "강남대로 15", "2932192");
             member.changeHomeAddress(address);
+
+            em.persist(member);
+            tx.commit();
+        } catch (Exception e) {
+            tx.rollback();
+            e.printStackTrace();
+        } finally {
+            em.close();
+        }
+    }
+
+    @DisplayName("주소 수정 테스트")
+    @Test
+    void updateAddress() {
+        var tx = getEntityTransaction();
+        tx.begin();
+
+        try {
+            var member = Member.registerMember("카르마");
+            var address = new Address("Republic of Korea", "서울", "강남대로 15", "2932192");
+            member.changeHomeAddress(address);
+            var modifiedAddress = new Address(address.getCountry(), address.getCity(), address.getStreet(), "29111");
+            member.changeHomeAddress(modifiedAddress);
 
             em.persist(member);
             tx.commit();
