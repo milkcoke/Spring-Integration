@@ -11,8 +11,6 @@ import static org.junit.jupiter.api.Assertions.*;
 class AlbumTest {
 
     private final EntityManagerFactory emf = Persistence.createEntityManagerFactory("jpa-practice");
-    // EntityManager 는 객체를 대신 저장해줌.
-    // 또 쓰레드간 절대 공유해선 안됨. 임시로 쓰고 버리는 객체임 (DB Connection 객체처럼)
     private EntityManager em;
 
     @Test
