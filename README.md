@@ -224,5 +224,51 @@ public class Team extends BaseEntity {
 임베디드 타입에 메소드를 정의할 수 있고 엔티티에 생명주기가 의존적이라 객체 지향적 코드 작성이 용이하다.
 
 ### 11. 임베디드 타입은 무조건 불변객체로 만들어라.
-공유 객체 참조를 막을 방법이 없기 때문에. Setter 를 만들지 않고, 오로지 생성자로 해당 객체를 새로 할당하는 방식(Immutable)을 택하도록 강제하라. \
-공유 객체 참조 상황시 디버깅은 정말 어렵다.
+
+- 오로지 생성자로 해당 객체를 새로 할당하는 방식(Immutable)을 택하도록 강제하라. \ 
+공유 객체 참조를 막을 방법이 없기 때문에. 공유 객체 참조 상황시 디버깅은 정말 어렵다.
+- 값 타입 (임베디드 타입)은 식별자가 존재하지 않아도 되는, 단순한 디자인이 가능한 경우에 사용한다.
+
+> 식별자가 필요하거나 지속해서 값을 추적, 변경해야 한다면 여지없이 엔티티로 승격시켜라.
+
+### 12. 값 타입 컬렉션은 별도의 테이블을 구성해야한다.
+**DB 모델링 측면에선 극히 상식적인 이야기다.** \
+한 테이블 내에 복수 값을 갖는 컬럼을 구성하는 것은 좋은 설계가 아니다.
+
+**아예 1:N 단방향 관계 또는 양방향 관계로 분리하고 별도 테이블을 만드는 것이 좋다.** \
+이는 일종의 정규화로 특정 엔티티에 같은 맥락을 가지는 컬럼이 다수가 될 때 정규화를 통해 별도의 테이블(엔티티)를 구성하는 것과 같다. \
+이렇게 만들어진 엔티티를 `Cascade`, `orphanRemoval` 로 라이프 사이클을 부모에 종속시키는 것이 애플리케이션 사이드 이펙트도 없애고, DB 모델링 측면에서도 깔끔한 설계다.
+
+> `ElementCollection`, `CollectionTable` 어노테이션으로 설정하는 방법이 존재하지만 \
+> 해당 Embeddable 타입이 가진 모든 컬럼을 묶어 PK 로 생성해야한다. \
+> 그러나 JPA 는 아예 PK 가 없는 테이블을 생성해버린다. \
+> 이렇게되면, 해당 Entity class 에서 값 타입 컬렉션에 업데이트를 시도할 때 \  
+> 모든 컬렉션을 싹다 지우고 변경된 상태를 통째로 저장하게된다.
+
+```java
+@Entity
+public class Member{
+    // ..
+    @ElementCollection(fetch = LAZY)
+    // 별도로 food_table 이 생성됨.
+    // FK 를 갖는 자식 테이블로 생성됨.
+    @CollectionTable(
+            name = "favorite_food",
+            joinColumns = @JoinColumn(name = "member_id")
+    )
+    @Column(name = "food_name", length = 63)
+    private Set<String> favoriteFoods = new HashSet<String>();
+}
+```
+```sql
+-- @ElementCollection 과 CollectionTable 을 통해 만들어진 값타입 테이블, PK 가 존재하지 않는다.
+create table FAVORITE_FOOD
+(
+    MEMBER_ID BIGINT not null,
+    FOOD_NAME CHARACTER VARYING(255),
+    -- PK가 필요한데, 여기서 PK 를 만드는 방법은 모든 컬럼을 함께 복합키로 만드는 법 뿐.
+    -- 그럴바엔 별도의 테이블을 생성하는게 낫다.
+    constraint FKNJ8USKU5AYU0PGLSUHQOIJHRM
+        foreign key (MEMBER_ID) references MEMBER
+);
+```
