@@ -1,5 +1,6 @@
 package com.example.jpapractice.domain.delivery;
 
+import com.example.jpapractice.domain.member.Address;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -13,14 +14,17 @@ public class Delivery {
     @Column(name = "delivery_id")
     private Long id;
 
-    @Column(length = 63)
-    private String city;
-    @Column(length = 63)
-    private String street;
-    @Column(length = 31)
-    private String zipcode;
+    @Embedded
+    private Address address;
 
     @Enumerated(EnumType.STRING)
     private DeliveryStatus status;
 
+    public Delivery(Address address) {
+        this.address = address;
+    }
+
+    public void changeAddress(Address address) {
+        this.address = address;
+    }
 }
