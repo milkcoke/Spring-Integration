@@ -27,18 +27,18 @@ public class JpaMain {
             tx.begin();
 
             // 비영속 상태
-            var member = Member.registerMember("새로운 멤버");
+//            var member = Member.registerMember("새로운 멤버");
 
             /**
              * 비영속 -> 영속 상태
              * 실제 DB에 저장되는게 아니라 영속성 컨텍스트에 저장.
              */
-            em.persist(member);
+//            em.persist(member);
             // 영속성 컨텍스트에서 관리되는 객체는 변경 감지로 인해 COMMIT 시점에 flush 되며 수정 내역이 반영된다.
 
-            Member foundMember = em.find(Member.class, 2L);
+            Member foundMember = em.find(Member.class, 1L);
             System.out.println("멤버 이름 : " + foundMember.getName());
-            foundMember.changeMemberInfo("블라디");
+            foundMember.changeMemberInfo("블라디", 27);
 
             // jpql 은 엔티티 객체를 대상으로 쿼리한다 (DB 타입이 달라져도 자동으로 매핑되어 대응된다.)
             // SQL 은 DB 테이블을 대상으로 쿼리를 한다.
