@@ -1,17 +1,11 @@
 package falcon.springpractice;
 
 import falcon.springpractice.aop.TimeTraceAop;
-import falcon.springpractice.repository.JdbcTemplateMemberRepository;
-import falcon.springpractice.repository.JpaMemberRepository;
 import falcon.springpractice.repository.MemberRepository;
 import falcon.springpractice.service.MemberService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-import javax.sql.DataSource;
 
 // Open-Close Principal (OCP) : 확장에는 열려있고, 변경에는 닫혀있다.
 @Configuration
