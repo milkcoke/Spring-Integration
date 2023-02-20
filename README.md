@@ -82,6 +82,40 @@ Refer to [this docs](https://docs.jboss.org/hibernate/orm/current/userguide/html
 
 ---
 
+## Spring Data JPA
+| JPA            | Hibernate                     | Spring DATA JPA            |
+|----------------|-------------------------------|----------------------------|
+| Just interface | Impelmentation instanceof JPA | Module for easy to use JPA |
+
+### 1. Setting build.gradle
+#### build.gradle
+```build.gradle
+dependencies {
+//..
+	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+}
+```
+### 2. Create interface inheritance of DataJPA
+```java
+@Repository
+public interface UserRepository extends JpaRepository<User, Long> {
+}
+```
+### 3. Test with DI `@DataJpaTest` annotation
+```java
+// This annotation includes next 2line (@Transactional, @Rollback)
+// This disables full auto-configuration and instead apply only configuration relevant to JPA tests.
+@DataJpaTest 
+@Transactional // Restrict each test code in transaction
+@Rollback(value = true)
+class UserRepositoryTest {
+    @Autowired
+    private UserRepository userRepository;
+    // ..
+}
+```
+---
+
 # Relationship
 
 ![img.png](./src/main/resources/assets/entity_diagram.png)
