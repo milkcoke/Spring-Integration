@@ -1,18 +1,22 @@
 package com.springyamlconfig
 
 import com.springyamlconfig.config.AppConfig
+import org.slf4j.LoggerFactory
 import org.springframework.boot.autoconfigure.SpringBootApplication
+import org.springframework.boot.context.properties.ConfigurationPropertiesScan
 import org.springframework.boot.runApplication
 
 @SpringBootApplication
+@ConfigurationPropertiesScan
 class SpringYamlConfigApplication(
     private val appConfig: AppConfig
 ) {
+    private val logger = LoggerFactory.getLogger(this.javaClass)
     init {
         this.printAppName()
     }
     private fun printAppName() {
-        println(this.appConfig.name)
+        logger.info(this.appConfig.name)
     }
 }
 
