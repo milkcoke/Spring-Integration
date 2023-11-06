@@ -12,12 +12,12 @@ class SpringYamlConfigApplication(
     private val appConfig: AppConfig
 ) {
     private val logger = LoggerFactory.getLogger(this.javaClass)
-    init {
-        this.printAppName()
-    }
-    private fun printAppName() {
-        logger.info(this.appConfig.name)
-    }
+//    init {
+//        this.printAppName()
+//    }
+//    private fun printAppName() {
+//        logger.info(this.appConfig.name)
+//    }
 }
 
 fun main(args: Array<String>) {
