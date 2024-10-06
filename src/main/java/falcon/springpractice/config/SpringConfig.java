@@ -1,4 +1,4 @@
-package falcon.springpractice;
+package falcon.springpractice.config;
 
 import falcon.springpractice.aop.TimeTraceAop;
 import falcon.springpractice.repository.MemberRepository;
