@@ -1,5 +1,5 @@
-# Spring Web
-Practice making web application by Spring Framework.
+# spring-3tier-architecture
+Practice making web application by Spring Framework which consists of 3-tier architecture.
 
 ## Requirements
 ### Member
