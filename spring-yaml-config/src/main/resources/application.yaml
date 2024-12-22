@@ -1,0 +1,8 @@
+spring:
+  profiles:
+    # If multiple profiles are active, which is executed?
+    default: local
+    active: prod
+#    active:
+#      - local
+#      - dev

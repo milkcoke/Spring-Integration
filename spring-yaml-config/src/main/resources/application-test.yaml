@@ -1,0 +1,9 @@
+name: test
+
+app:
+  person:
+    name: falcon
+    age: 55
+  champ:
+    hidden-name: vladimir
+    expose-name: khazix
