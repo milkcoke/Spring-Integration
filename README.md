@@ -1,4 +1,5 @@
-# Spring Practice
+# Spring-Annotation-Practice
+Spring annotation related practice repository
 
 ## Build & Deploy
 
