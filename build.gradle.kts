@@ -1,11 +1,11 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
-    id("org.springframework.boot") version "3.1.5"
-    id("io.spring.dependency-management") version "1.1.3"
-    id("com.google.cloud.tools.jib") version "3.4.0"
-    kotlin("jvm") version "1.9.20"
-    kotlin("plugin.spring") version "1.9.20"
+    id("org.springframework.boot") version "3.4.1"
+    id("io.spring.dependency-management") version "1.1.7"
+    id("com.google.cloud.tools.jib") version "3.4.4"
+    kotlin("jvm") version "2.1.0"
+    kotlin("plugin.spring") version "2.1.0"
 }
 
 group = "com"
@@ -29,7 +29,7 @@ dependencies {
 
 jib {
     from {
-        image = "openjdk:20-jdk"
+        image = "openjdk:21-jdk"
     }
     to {
         image = "milkcoke/spring-yaml"
@@ -42,7 +42,7 @@ jib {
 tasks.withType<KotlinCompile> {
     kotlinOptions {
         freeCompilerArgs += "-Xjsr305=strict"
-        jvmTarget = "20"
+        jvmTarget = "21"
     }
 }
 
