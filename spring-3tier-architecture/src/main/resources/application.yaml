@@ -1,0 +1,31 @@
+spring:
+  mvc:
+    hidden-method:
+      filter:
+        enabled: true
+  #  DB Connection 과 관련된 설정
+  datasource:
+    url: jdbc:h2:tcp://localhost/~/jpashop
+    username: sa
+    password:
+    driver-class-name: org.h2.Driver
+
+  jpa:
+    hibernate:
+    # 자동으로 테이블 생성하는 모드
+    # Entity 정보를 보고 재생성
+      ddl-auto: create
+    properties:
+      hibernate:
+        # system out 에 출력되는 환경이라 비활성화
+        show_sql: false
+        format_sql: true
+
+server:
+  port: 9000
+
+logging:
+  level:
+    # Hibernate 가 생성하는 SQL 이 모두 보이도록 디버그모드 사용.
+    org.hibernate.SQL: debug
+    org.hibernate.type: trace
