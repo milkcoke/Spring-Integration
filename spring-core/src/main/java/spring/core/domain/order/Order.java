@@ -10,16 +10,16 @@ import lombok.ToString;
 @ToString
 public class Order {
 
-    private final Long memberId;
-    private final String itemName;
-    private final int itemPrice;
-    private final int discountPrice;
+  private final Long memberId;
+  private final String itemName;
+  private final int itemPrice;
+  private final int discountPrice;
 
-    /**
-     * @return 할인된 금액
-     */
-    public int calculatePrice() {
-        return itemPrice - discountPrice;
-    }
+  /**
+   * @return 할인된 금액
+   */
+  public int calculatePrice() {
+    return itemPrice - discountPrice;
+  }
 
 }

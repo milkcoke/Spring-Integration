@@ -4,7 +4,7 @@ import spring.core.domain.member.Member;
 
 public interface MemberService {
 
-    void join(Member member);
+  void join(Member member);
 
-    Member findMemberById(Long memberId);
+  Member findMemberById(Long memberId);
 }

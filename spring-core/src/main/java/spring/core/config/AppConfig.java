@@ -16,28 +16,28 @@ import org.springframework.context.annotation.Bean;
 //@Configuration
 public class AppConfig {
 
-    @Bean
-    public MemberService memberService() {
-        // 생성자 주입
-        return new MemberServiceImpl(getMemberRepository());
-    }
+  @Bean
+  public MemberService memberService() {
+    // 생성자 주입
+    return new MemberServiceImpl(getMemberRepository());
+  }
 
-    @Bean
-    public OrderService orderService() {
-        return new OrderServiceImpl(getMemberRepository(), getDiscountPolicy());
-    }
+  @Bean
+  public OrderService orderService() {
+    return new OrderServiceImpl(getMemberRepository(), getDiscountPolicy());
+  }
 
-    // 역할에 대한 구현부가 조금은 보이게 해줘야한다.
-    // '메모리 멤버 리포지토리' 를 쓴다는 구현부가 드러남.
-    @Bean
-    public MemberRepository getMemberRepository() {
-        return new MemoryMemberRepository();
-    }
+  // 역할에 대한 구현부가 조금은 보이게 해줘야한다.
+  // '메모리 멤버 리포지토리' 를 쓴다는 구현부가 드러남.
+  @Bean
+  public MemberRepository getMemberRepository() {
+    return new MemoryMemberRepository();
+  }
 
-    // '고정 할인율 정책'을 쓴다는 구현부가 드러남.
-    @Bean
-    public DiscountPolicy getDiscountPolicy() {
-        return new FixDiscountPolicy();
-    }
+  // '고정 할인율 정책'을 쓴다는 구현부가 드러남.
+  @Bean
+  public DiscountPolicy getDiscountPolicy() {
+    return new FixDiscountPolicy();
+  }
 }
 

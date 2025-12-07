@@ -6,7 +6,7 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 @ComponentScan(
         // 패키지를 찾을 시작 위치를 지정할 수 있음.
-        basePackages = "spring.core"
+  basePackages = "spring.core"
         // Configuration 붙은 클래스는 제외 (ex. milkcoke.core.config.AppConfig)하여 충돌 방지
 //        excludeFilters = @ComponentScan.Filter(type = FilterType.ANNOTATION, classes = Configuration.class)
 )

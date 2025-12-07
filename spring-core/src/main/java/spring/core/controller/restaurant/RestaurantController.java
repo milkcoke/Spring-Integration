@@ -19,33 +19,32 @@ import java.util.Map;
 @RequiredArgsConstructor
 @Slf4j
 public class RestaurantController {
-    private final RestaurantService restaurantService;
+  private final RestaurantService restaurantService;
 
-    @GetMapping("/")
-    public List<Restaurant> getAllRestaurants() {
-        return restaurantService.readAllRestaurants();
+  @GetMapping("/")
+  public List<Restaurant> getAllRestaurants() {
+    return restaurantService.readAllRestaurants();
+  }
+
+  @GetMapping("/{restaurantId}/menu")
+  public ResponseEntity<Map<String, Object>> getRestaurantMenu(@PathVariable String restaurantId) {
+    try {
+      List<MenuItem> menuItems = restaurantService.readMenusFromPartner(restaurantId);
+
+      return ResponseEntity.ok(Map.of(
+          "restaurantId", restaurantId,
+          "menuItems", menuItems,
+          "count", menuItems.size(),
+          "message", "Menu fetched successfully (possibly after retries)"
+        )
+      );
+    } catch (Exception e) {
+      log.error("Failed to fetch menu after all retries: {}", e.getMessage());
+      return ResponseEntity.status(503).body(Map.of(
+        "error", "Service temporarily unavailable",
+        "message", e.getMessage(),
+        "restaurantId", restaurantId
+      ));
     }
-
-    @GetMapping("/{restaurantId}/menu")
-    public ResponseEntity<Map<String, Object>> getRestaurantMenu(@PathVariable String restaurantId) {
-        try {
-            List<MenuItem> menuItems = restaurantService.readMenusFromPartner(restaurantId);
-
-            return ResponseEntity.ok(Map.of(
-                      "restaurantId", restaurantId,
-                    "menuItems", menuItems,
-                    "count", menuItems.size(),
-                    "message", "Menu fetched successfully (possibly after retries)"
-                    )
-            );
-        } catch (Exception e) {
-            log.error("Failed to fetch menu after all retries: {}", e.getMessage());
-            return ResponseEntity.status(503).body(Map.of(
-                    "error", "Service temporarily unavailable",
-                    "message",  e.getMessage(),
-                    "restaurantId",  restaurantId
-            ));
-        }
-    }
-
+  }
 }

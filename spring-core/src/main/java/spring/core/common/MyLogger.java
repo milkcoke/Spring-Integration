@@ -18,27 +18,27 @@ import java.util.UUID;
 @Scope(value = "request", proxyMode = ScopedProxyMode.TARGET_CLASS)
 public class MyLogger {
 
-    private String uuid;
-    private String requestUrl;
+  private String uuid;
+  private String requestUrl;
 
-    public void setRequestUrl(String requestUrl) {
-        this.requestUrl = requestUrl;
-    }
+  public void setRequestUrl(String requestUrl) {
+    this.requestUrl = requestUrl;
+  }
 
-    public void logging(String message) {
-        System.out.println("[" + uuid + "]" + "[" + requestUrl + "] " + message);
-    }
+  public void logging(String message) {
+    System.out.println("[" + uuid + "]" + "[" + requestUrl + "] " + message);
+  }
 
-    @PostConstruct
-    public void init() {
-        // 유일성 보장.
-        // 로또 1등확률보다 낮음.
-        uuid = UUID.randomUUID().toString();
-        System.out.println("[" + uuid + "]" + "request scope bean created: " + this);
-    }
+  @PostConstruct
+  public void init() {
+    // 유일성 보장.
+    // 로또 1등확률보다 낮음.
+    uuid = UUID.randomUUID().toString();
+    System.out.println("[" + uuid + "]" + "request scope bean created: " + this);
+  }
 
-    @PreDestroy
-    public void close() {
-        System.out.println("[" + uuid + "]" + " request bean destroyed: " + this);
-    }
+  @PreDestroy
+  public void close() {
+    System.out.println("[" + uuid + "]" + " request bean destroyed: " + this);
+  }
 }
