@@ -30,10 +30,10 @@ public class RestaurantRepository {
     private final Map<String, MenuItem> menuItems = new ConcurrentHashMap<>();
 
     public Optional<Restaurant> findRestaurant(String id) {
-        return Optional.of(restaurants.get(id));
+        return Optional.ofNullable(restaurants.get(id));
     }
     public Optional<MenuItem> findMenuItem(String id) {
-        return Optional.of(menuItems.get(id));
+        return Optional.ofNullable(menuItems.get(id));
     }
 
     @PostConstruct
