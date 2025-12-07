@@ -3,17 +3,17 @@
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 
-    <bean id="memberService" class="milkcoke.core.service.member.MemberServiceImpl" >
+    <bean id="memberService" class="spring.core.service.member.MemberServiceImpl" >
         <constructor-arg name="memberRepository" ref="memberRepository" />
     </bean>
 
-    <bean id="orderService" class="milkcoke.core.service.order.OrderServiceImpl">
+    <bean id="orderService" class="spring.core.service.order.OrderServiceImpl">
         <constructor-arg name="memberRepository" ref="memberRepository" />
         <constructor-arg name="discountPolicy" ref="discountPolicy"/>
     </bean>
 
-    <bean id="memberRepository" class="milkcoke.core.repository.member.MemoryMemberRepository" />
-    <bean id="discountPolicy" class="milkcoke.core.domain.discount.RateDiscountPolicy" />
+    <bean id="memberRepository" class="spring.core.repository.member.MemoryMemberRepository" />
+    <bean id="discountPolicy" class="spring.core.domain.discount.RateDiscountPolicy" />
 
 
 </beans>
