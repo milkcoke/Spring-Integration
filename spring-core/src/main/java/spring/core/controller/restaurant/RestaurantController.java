@@ -21,7 +21,7 @@ import java.util.Map;
 public class RestaurantController {
   private final RestaurantService restaurantService;
 
-  @GetMapping("/")
+  @GetMapping()
   public List<Restaurant> getAllRestaurants() {
     return restaurantService.readAllRestaurants();
   }

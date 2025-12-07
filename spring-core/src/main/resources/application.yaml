@@ -9,5 +9,8 @@ spring:
         - v2
       default: v1
       use:
+        # It seems that path-segment bug , request mapping ambiguity issue.
         # The value you set for path-segment is the index of the path element after the host and port.
-        path-segment: 1
+#        path-segment: 2
+        header: X-API-VERSION
+

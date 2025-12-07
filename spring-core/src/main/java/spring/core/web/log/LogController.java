@@ -3,5 +3,5 @@ package spring.core.web.log;
 import jakarta.servlet.http.HttpServletRequest;
 
 public interface LogController {
-  public String loggingDemo(HttpServletRequest httpServletRequest);
+  String loggingDemo(HttpServletRequest httpServletRequest);
 }

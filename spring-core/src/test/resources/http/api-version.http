@@ -1,0 +1,9 @@
+
+# API Versioning
+### Get API version v1
+GET http://localhost:8080/api/version
+X-API-Version: v1
+
+### Get API version v2
+GET http://localhost:8080/api/version
+X-API-Version: v2
