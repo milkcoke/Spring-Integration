@@ -29,26 +29,30 @@ public class RestaurantRepository {
     @Getter
     private final Map<String, MenuItem> menuItems = new ConcurrentHashMap<>();
 
-    @PostConstruct
-    private void loadData() throws IOException {
-        var resource = new ClassPathResource("data/restaurants.json");
-        List<Restaurant> restaurantList = jsonMapper.readValue(resource.getInputStream(), new TypeReference<List<Restaurant>>() {
-        });
-        restaurantList.forEach(restaurant -> {restaurants.put(restaurant.id(), restaurant);});
-        log.info("restaurants data loaded!");
-
-        resource = new ClassPathResource("data/menu-items.json");
-        List<MenuItem> menuItemList = jsonMapper.readValue(resource.getInputStream(), new TypeReference<List<MenuItem>>() {
-        });
-        menuItemList.forEach(menuItem ->  {menuItems.put(menuItem.id(), menuItem);});
-        log.info("menuItems data loaded!");
-    }
-
-
     public Optional<Restaurant> findRestaurant(String id) {
         return Optional.of(restaurants.get(id));
     }
     public Optional<MenuItem> findMenuItem(String id) {
         return Optional.of(menuItems.get(id));
     }
+
+    @PostConstruct
+    private void loadData() throws IOException {
+        var resource = new ClassPathResource("data/restaurants.json");
+        List<Restaurant> restaurantList = jsonMapper.readValue(
+                resource.getInputStream(),
+                new TypeReference<>() {}
+        );
+        restaurantList.forEach(restaurant -> restaurants.put(restaurant.id(), restaurant));
+        log.info("restaurants data loaded!");
+
+        resource = new ClassPathResource("data/menu-items.json");
+        List<MenuItem> menuItemList = jsonMapper.readValue(
+                resource.getInputStream(),
+                new TypeReference<>() {}
+        );
+        menuItemList.forEach(menuItem ->  menuItems.put(menuItem.id(), menuItem));
+        log.info("menuItems data loaded!");
+    }
+
 }

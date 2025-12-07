@@ -26,6 +26,7 @@ public class RestaurantController {
         return restaurantService.readAllRestaurants();
     }
 
+    @GetMapping("/{restaurantId}/menu")
     public ResponseEntity<Map<String, Object>> getRestaurantMenu(@PathVariable String restaurantId) {
         try {
             List<MenuItem> menuItems = restaurantService.readMenusFromPartner(restaurantId);
