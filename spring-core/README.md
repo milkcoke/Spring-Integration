@@ -14,21 +14,72 @@ when `spring.threads.virtual.enabled` is true.
 SpringBoot 4.x uses jackson 3.x as default , 2.x supported as deprecated form.
 
 #### API versioning
+
 ```java
 @RestController
 @RequestMapping("/api")
 public class ApiVersionController {
-    @GetMapping(value = "/{version}/version", version = "1.0.0")
+    @GetMapping(value = "/{version}/version", version = "v1")
     public String versionV1() {
-        return "1.0.0";
+        return "v1";
     }
-    @GetMapping(value = "/{version}/version", version = "2.0.0")
+    @GetMapping(value = "/{version}/version", version = "v2")
     public String versionV2() {
-        return "2.0.0";
+        return "v2";
     }
 }
 
 ```
+
+#### (1) Configuration by `application.yaml`
+```yaml
+spring:
+  mvc:
+    apiversion:
+      supported:
+        - v1
+        - v2
+      default: v1
+      use:
+        # The value you set for path-segment is the index of the path element after the host and port.
+        path-segment: 1
+```
+#### (2) Configuration by class
+```java
+public class ApiVersionConfig implements ApiVersionParser {
+    @Override
+    public Comparable parseVersion(String version) {
+        version = version.toLowerCase();
+        version = version.substring(1);
+        return version;
+    }
+}
+
+
+@Configuration
+public class WebConfig  implements WebMvcConfigurer {
+
+    @Override
+    public void configureApiVersioning(ApiVersionConfigurer configurer) {
+        configurer
+                .addSupportedVersions("v1", "v2")
+                .setDefaultVersion("v1")
+                .usePathSegment(1)
+                .setVersionParser(new ApiVersionConfig());
+    }
+}
+```
+
+#### Why `path-segument` is required?
+Since the URL is just a string of segments separated by slashes, Spring needs a specific rule to find the version. The integer value of path-segment provides this rule: it specifies the zero-based index of the segment that holds the version value. \
+Example: If your URL is `https://example.com/api/v2/products` and you set spring.mvc.apiversion.use.path-segment=1:
+
+Spring splits the path: ["api", "v2", "products"]. 
+
+It looks at index 1, extracts "v2", and then uses this extracted value to find the method annotated with version = "v2".
+
+> ⚠️Without this setting, Spring sees a request URL `(e.g., /api/v1/users)` and an annotation rule (e.g., `@GetMapping(version="v1")`), but it doesn't know where to look in the URL for the "v1" value.
+
 
 ---
 ## Configuration

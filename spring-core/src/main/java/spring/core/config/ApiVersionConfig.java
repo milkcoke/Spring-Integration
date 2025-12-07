@@ -1,6 +1,8 @@
 package spring.core.config;
 
-public class ApiVersionConfig implements org.springframework.web.accept.ApiVersionParser {
+import org.springframework.web.accept.ApiVersionParser;
+
+public class ApiVersionConfig implements ApiVersionParser {
     @Override
     public Comparable parseVersion(String version) {
         version = version.toLowerCase();

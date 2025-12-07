@@ -1,2 +1,13 @@
 server:
   port: 8080
+
+spring:
+  mvc:
+    apiversion:
+      supported:
+        - v1
+        - v2
+      default: v1
+      use:
+        # The value you set for path-segment is the index of the path element after the host and port.
+        path-segment: 1
