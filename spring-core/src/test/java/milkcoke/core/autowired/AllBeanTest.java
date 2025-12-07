@@ -1,10 +1,8 @@
 package milkcoke.core.autowired;
 
-import milkcoke.core.AutoAppConfig;
 import milkcoke.core.domain.discount.DiscountPolicy;
 import milkcoke.core.domain.member.Grade;
 import milkcoke.core.domain.member.Member;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
@@ -38,7 +36,7 @@ public class AllBeanTest {
     void findAllBean() {
         // Component Scan 을 하면서 fixDiscountPolicy, rateDiscountPolicy (camelCase) 모두 읽어들인다.
         // 모두 list, map 에 각각 DI 된다.
-        var ac = new AnnotationConfigApplicationContext(AutoAppConfig.class, DiscountService.class);
+        var ac = new AnnotationConfigApplicationContext(milkcoke.core.config.AutoAppConfig.class, DiscountService.class);
         DiscountService discountService = ac.getBean(DiscountService.class);
         var member = new Member(1L, "userA", Grade.VIP);
         // Component Scan 시 자동으로 camelCase 로 Spring Bean 을 Container 에 등록.

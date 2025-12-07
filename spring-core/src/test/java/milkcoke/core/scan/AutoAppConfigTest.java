@@ -1,6 +1,6 @@
 package milkcoke.core.scan;
 
-import milkcoke.core.AutoAppConfig;
+import milkcoke.core.config.AutoAppConfig;
 import milkcoke.core.service.member.MemberService;
 import org.junit.jupiter.api.Test;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;

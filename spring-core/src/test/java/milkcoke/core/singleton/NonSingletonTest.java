@@ -1,6 +1,6 @@
 package milkcoke.core.singleton;
 
-import milkcoke.core.AppConfig;
+import milkcoke.core.config.AppConfig;
 import milkcoke.core.service.member.MemberService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

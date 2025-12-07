@@ -1,7 +1,6 @@
 package milkcoke.core.singleton;
 
 import lombok.Getter;
-import milkcoke.core.AppConfig;
 import milkcoke.core.service.member.MemberService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -36,7 +35,7 @@ public class SingletonTest {
     @Test
     @DisplayName("Spring Container & Singleton")
     void springContainer() {
-        AnnotationConfigApplicationContext ac = new AnnotationConfigApplicationContext(AppConfig.class);
+        AnnotationConfigApplicationContext ac = new AnnotationConfigApplicationContext(milkcoke.core.config.AppConfig.class);
 
         // 싱글톤 패턴이기 때문에 같은 Reference 를 참조함.
         MemberService memberService1 = ac.getBean("memberService", MemberService.class);

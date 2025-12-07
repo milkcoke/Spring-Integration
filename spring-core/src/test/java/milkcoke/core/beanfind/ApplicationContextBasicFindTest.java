@@ -1,6 +1,6 @@
 package milkcoke.core.beanfind;
 
-import milkcoke.core.AppConfig;
+import milkcoke.core.config.AppConfig;
 import milkcoke.core.service.member.MemberService;
 import milkcoke.core.service.member.MemberServiceImpl;
 import org.junit.jupiter.api.DisplayName;
@@ -32,7 +32,7 @@ public class ApplicationContextBasicFindTest {
     @Test
     @DisplayName("빈 구체적 타입으로 조회")
     void findBeanByNameAndClass() {
-        // AppConfig 에 구현체가 등록되어 있기 때문에 DIP 원칙을 깨뜨리긴함.. => Interface 로 조회하는게 원래는 국룰
+        // milkcoke.core.config.AppConfig 에 구현체가 등록되어 있기 때문에 DIP 원칙을 깨뜨리긴함.. => Interface 로 조회하는게 원래는 국룰
         var memberService = ac.getBean("memberService", MemberServiceImpl.class);
         assertThat(memberService).isInstanceOf(MemberServiceImpl.class);
     }

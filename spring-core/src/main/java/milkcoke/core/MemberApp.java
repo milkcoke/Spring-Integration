@@ -1,5 +1,6 @@
 package milkcoke.core;
 
+import milkcoke.core.config.AppConfig;
 import milkcoke.core.domain.member.Grade;
 import milkcoke.core.domain.member.Member;
 import milkcoke.core.service.member.MemberService;

@@ -1,4 +1,4 @@
-package milkcoke.core;
+package milkcoke.core.config;
 
 import milkcoke.core.domain.discount.DiscountPolicy;
 import milkcoke.core.domain.discount.FixDiscountPolicy;

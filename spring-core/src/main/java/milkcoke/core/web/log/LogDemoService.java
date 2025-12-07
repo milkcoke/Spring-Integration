@@ -1,4 +1,4 @@
-package milkcoke.core.web;
+package milkcoke.core.web.log;
 
 import lombok.RequiredArgsConstructor;
 import milkcoke.core.common.MyLogger;
