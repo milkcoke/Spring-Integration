@@ -3,5 +3,5 @@
 GET http://localhost:8080/api/restaurants/
 
 ### Get menu by restaurant id
-GET http://localhost:8080/api/rest-001/menu
+GET http://localhost:8080/api/restaurants/rest-001/menu
 Accept: application/json
