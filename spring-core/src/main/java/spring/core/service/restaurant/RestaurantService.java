@@ -2,6 +2,7 @@ package spring.core.service.restaurant;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.resilience.annotation.Retryable;
 import org.springframework.stereotype.Service;
 import spring.core.domain.restaurant.MenuItem;
 import spring.core.domain.restaurant.Restaurant;
@@ -19,11 +20,17 @@ public class RestaurantService {
   private final RestaurantRepository restaurantRepository;
   private final Random random = new Random();
 
+  @Retryable(
+    includes = RuntimeException.class,
+    maxRetries = 4,
+    delay = 1000, // 1-second initial delay
+    multiplier = 2.0 // Exponential backoff
+  )
   public List<MenuItem> readMenusFromPartner(String restaurantId) {
     log.info("Fetching menu from restaurant partner API for: {}", restaurantId);
 
     if (random.nextDouble() < 0.4) {
-      log.warn("Restaurant API failed!");
+      log.warn("Restaurant API failed! Will retry...");
       throw new RuntimeException("Partner restaurant API is temporarily unavailable!");
     }
 

@@ -28,8 +28,32 @@ public class ApiVersionController {
         return "v2";
     }
 }
-
 ```
+
+#### Resilience
+SpringBoot 4.x provides resilience annotation `@EnableResilientMethods` to enable resilience features \
+such as retries, circuit breakers, and rate limiters on methods.
+```java
+@EnableResilientMethods
+@SpringBootApplication
+public class CoreApplication {
+}
+```
+
+Apply `@Retryable` annotation to the method you want to enable retries for
+```java
+  @Retryable(
+    includes = RuntimeException.class, // Retry on RuntimeException
+    maxRetries = 4,
+    delay = 1000, // 1-second initial delay
+    multiplier = 2.0 // Exponential backoff
+  )
+  public List<MenuItem> readMenusFromPartner(String restaurantId) {
+    // method implementation
+  }
+```
+
+
 
 #### (1) Configuration by `application.yaml`
 ```yaml
