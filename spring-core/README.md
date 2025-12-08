@@ -3,17 +3,17 @@
 
 ## SpringBoot 4.0
 
-#### Java Version
+### Java Version
 SpringBoot 4.x requires Java 17 or later.
 
-#### Virtual thread
+### Virtual thread
 Autoconfigured HTTP clients backed by the JDK HttpClient are now configured to use virtual threading \
 when `spring.threads.virtual.enabled` is true.
 
-#### Jackson version
+### Jackson version
 SpringBoot 4.x uses jackson 3.x as default , 2.x supported as deprecated form.
 
-#### API versioning
+### API versioning
 
 ```java
 @RestController
@@ -30,7 +30,9 @@ public class ApiVersionController {
 }
 ```
 
-#### Resilience
+### Resilience
+
+#### `@Retryable`
 SpringBoot 4.x provides resilience annotation `@EnableResilientMethods` to enable resilience features \
 such as retries, circuit breakers, and rate limiters on methods.
 ```java
@@ -52,6 +54,61 @@ Apply `@Retryable` annotation to the method you want to enable retries for
     // method implementation
   }
 ```
+
+#### `@RetryTemplate` 
+`RetryTemplate` define how to retry with RetryPolicy.
+
+```java
+
+public class DriverAssignmentService {
+
+  private final RetryTemplate retryTemplate;
+  // Define RetryPolicy and RetryTemplate
+  public DriverAssignmentService(DriverRetryListener driverRetryListener) {
+    RetryPolicy retryPolicy = RetryPolicy.builder()
+      .maxRetries(4)
+      .delay(Duration.ofMillis(1000))
+      .multiplier(2)
+      .includes(NoDriversAvailableException.class)
+      .build();
+
+    this.retryTemplate = new RetryTemplate(retryPolicy);
+    retryTemplate.setRetryListener(driverRetryListener);
+  }
+
+  public Driver assignDriver(DriverOrder order) throws RetryException {
+    log.info("Attempting to assign driver with order {}", order.id());
+
+    return retryTemplate.execute(() -> {
+      if (random.nextDouble() < 0.5 || this.drivers.isEmpty() ) {
+        throw new NoDriversAvailableException("No drivers in area , will retry...");
+      }
+      return this.drivers.get(random.nextInt(this.drivers.size()));
+    });
+  }
+}
+```
+
+#### RetryListener
+RetryListener interface is used for registration event handler on retry events
+
+```java
+public class DriverRetryListener implements RetryListener {
+  @Override
+  public void beforeRetry(RetryPolicy retryPolicy, Retryable<?> retryable) {
+  }
+  
+  @Override
+  public void onRetrySuccess(RetryPolicy retryPolicy, Retryable<?> retryable, @Nullable Object result) {
+  }
+  
+  @Override
+  public void onRetryFailure(RetryPolicy retryPolicy, Retryable<?> retryable, Throwable throwable) {
+  }
+}
+```
+
+
 
 
 
