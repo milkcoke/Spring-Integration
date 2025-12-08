@@ -1,0 +1,4 @@
+
+### Assign driver
+POST http://localhost:8080/api/drivers/assign?orderId=order-001
+Accept: application/json
