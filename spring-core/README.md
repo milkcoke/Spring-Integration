@@ -110,7 +110,9 @@ public class DriverRetryListener implements RetryListener {
 
 ### REST Client support with `@HttpExchange` and `@ImportHttpServices` annotation
 Just define interface, Spring will generate the implementation class automatically. \
-No need boiler plate code
+No need boilerplate code
+
+Use this feature when to communication between service and service like MSA Http.
 ```java
 @HttpExchange(
   url = "https://jsonplaceholder.typicode.com",
