@@ -108,6 +108,30 @@ public class DriverRetryListener implements RetryListener {
 }
 ```
 
+### REST Client support with `@HttpExchange` and `@ImportHttpServices` annotation
+Just define interface, Spring will generate the implementation class automatically. \
+No need boiler plate code
+```java
+@HttpExchange(
+  url = "https://jsonplaceholder.typicode.com",
+  accept = "application/json"
+)
+public interface NewerTodoService {
+ 
+  @GetExchange("/todos")
+  List<Todo> findAllTodos();
+}
+
+```
+
+```java
+@Configuration(proxyBeanMethods = false)
+@ImportHttpServices(NewerTodoService.class)
+public class TodoConfig {
+  // Can add more configurations if needed
+}
+```
+
 
 
 
