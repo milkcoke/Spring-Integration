@@ -3,6 +3,7 @@ package spring.core.controller.todo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import spring.core.domain.todo.Todo;
@@ -19,5 +20,10 @@ public class TodoController {
   @GetMapping("")
   public ResponseEntity<List<Todo>> getTodos() {
     return ResponseEntity.ok(todoService.findAllTodos());
+  }
+
+  @GetMapping("/{id}")
+  public ResponseEntity<Todo> getById(@PathVariable Long id) {
+    return ResponseEntity.ok(todoService.findTodoById(id));
   }
 }

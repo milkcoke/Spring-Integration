@@ -134,6 +134,9 @@ public class TodoConfig {
 }
 ```
 
+### RestTestClient
+`RestTestClient` is a combining the best features of `MockMvc` and `WebTestClient` into one simple API.
+
 
 
 
