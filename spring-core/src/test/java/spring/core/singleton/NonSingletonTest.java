@@ -1,7 +1,7 @@
 package spring.core.singleton;
 
-import milkcoke.core.config.AppConfig;
-import milkcoke.core.service.member.MemberService;
+import spring.core.config.AppConfig;
+import spring.core.service.member.MemberService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

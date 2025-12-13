@@ -1,7 +1,7 @@
 package spring.core.beanfind;
 
-import milkcoke.core.repository.member.MemberRepository;
-import milkcoke.core.repository.member.MemoryMemberRepository;
+import spring.core.repository.member.MemberRepository;
+import spring.core.repository.member.MemoryMemberRepository;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.NoUniqueBeanDefinitionException;

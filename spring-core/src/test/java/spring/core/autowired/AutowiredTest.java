@@ -1,6 +1,6 @@
 package spring.core.autowired;
 
-import milkcoke.core.domain.member.Member;
+import spring.core.domain.member.Member;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;

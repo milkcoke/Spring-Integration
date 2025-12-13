@@ -1,9 +1,9 @@
 package spring.core.service.member;
 
-import milkcoke.core.domain.member.Member;
-import milkcoke.core.domain.member.Grade;
-import milkcoke.core.repository.member.MemberRepository;
-import milkcoke.core.repository.member.MemoryMemberRepository;
+import spring.core.domain.member.Member;
+import spring.core.domain.member.Grade;
+import spring.core.repository.member.MemberRepository;
+import spring.core.repository.member.MemoryMemberRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

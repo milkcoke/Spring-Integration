@@ -1,8 +1,8 @@
 package spring.core.discount;
 
-import milkcoke.core.domain.discount.RateDiscountPolicy;
-import milkcoke.core.domain.member.Grade;
-import milkcoke.core.domain.member.Member;
+import spring.core.domain.discount.RateDiscountPolicy;
+import spring.core.domain.member.Grade;
+import spring.core.domain.member.Member;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

@@ -1,9 +1,9 @@
 package spring.core.service.order;
 
-import milkcoke.core.domain.discount.FixDiscountPolicy;
-import milkcoke.core.domain.member.Grade;
-import milkcoke.core.domain.member.Member;
-import milkcoke.core.repository.member.MemoryMemberRepository;
+import spring.core.domain.discount.FixDiscountPolicy;
+import spring.core.domain.member.Grade;
+import spring.core.domain.member.Member;
+import spring.core.repository.member.MemoryMemberRepository;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.*;

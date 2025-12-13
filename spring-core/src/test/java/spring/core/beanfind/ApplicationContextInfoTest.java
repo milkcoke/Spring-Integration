@@ -1,6 +1,6 @@
 package spring.core.beanfind;
 
-import milkcoke.core.config.AppConfig;
+import spring.core.config.AppConfig;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.config.BeanDefinition;

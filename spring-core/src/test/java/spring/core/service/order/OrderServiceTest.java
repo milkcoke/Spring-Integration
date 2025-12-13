@@ -1,13 +1,13 @@
 package spring.core.service.order;
 
-import milkcoke.core.domain.discount.DiscountPolicy;
-import milkcoke.core.domain.discount.FixDiscountPolicy;
-import milkcoke.core.domain.member.Grade;
-import milkcoke.core.domain.member.Member;
-import milkcoke.core.repository.member.MemberRepository;
-import milkcoke.core.repository.member.MemoryMemberRepository;
-import milkcoke.core.service.member.MemberService;
-import milkcoke.core.service.member.MemberServiceImpl;
+import spring.core.domain.discount.DiscountPolicy;
+import spring.core.domain.discount.FixDiscountPolicy;
+import spring.core.domain.member.Grade;
+import spring.core.domain.member.Member;
+import spring.core.repository.member.MemberRepository;
+import spring.core.repository.member.MemoryMemberRepository;
+import spring.core.service.member.MemberService;
+import spring.core.service.member.MemberServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

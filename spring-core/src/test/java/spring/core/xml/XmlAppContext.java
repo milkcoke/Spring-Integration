@@ -1,6 +1,6 @@
 package spring.core.xml;
 
-import milkcoke.core.service.member.MemberService;
+import spring.core.service.member.MemberService;
 import org.junit.jupiter.api.Test;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.GenericXmlApplicationContext;
