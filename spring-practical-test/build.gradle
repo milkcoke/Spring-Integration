@@ -11,7 +11,7 @@ java {
     toolchain {
         // Minimum version of JDK used to compile
         // This is used really at the compile time.
-        languageVersion = JavaLanguageVersion.of(21)
+//        languageVersion = JavaLanguageVersion.of(21)
     }
     // Minimum java code version supported
     // This is not really related to which jdk (compiler) should be used in compile time

@@ -137,11 +137,139 @@ public class TodoConfig {
 ### RestTestClient
 `RestTestClient` is a combining the best features of `MockMvc` and `WebTestClient` into one simple API.
 
+It supports multiple ways to test.
+
+| API                      | When to use            | Test Speed |
+|--------------------------|------------------------|------------|
+| bindToController         | Unit Test              | Fatest     |
+| bindToMockMvc            | Unit Test with mocking | Fast       |
+| bindToApplicationContext | Integration Test       | Slow       |
+| bindToServer             | End To End Test        | Slowest    |
+
+#### AS-IS
+MockMvc Test code like this
+
+```java
+@RestController
+@RequestMapping("/api/users")
+class UserController {
+    private final UserService userService;
+    // ... constructor ...
+
+    @GetMapping("/{id}")
+    public User getUserById(@PathVariable Long id) {
+        return userService.findById(id);
+    }
+}
+
+@WebMvcTest(UserController.class)
+class UserControllerMockMvcTest {
+
+  @Autowired 
+  private MockMvc mockMvc;
+  @MockitoBean 
+  private UserService userService;
+
+  @Test
+  void getUserById_MockMvc() throws Exception {
+    User expectedUser = new User(1L, "Alice");
+
+    // Arrange: Mock the service layer dependency
+    given(userService.findById(1L)).willReturn(expectedUser);
+
+    // Act & Assert
+    mockMvc.perform(get("/api/users/{id}", 1L)
+        .contentType(MediaType.APPLICATION_JSON))
+      .andExpect(status().isOk())
+      .andExpect(jsonPath("$.id").value(1L))
+      .andExpect(jsonPath("$.name").value("Alice"));
+  }
+}
+```
+
+End to End test like this
+
+```java
+
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+class UserControllerWebTestClientTest {
+
+  @Autowired private WebTestClient webTestClient;
+
+  @Test
+  void getUserById_WebTestClient() {
+    User expectedUser = new User(1L, "Bob"); // Assume this is in the real database
+    
+    webTestClient.get().uri("/api/users/{id}", 1L)
+      .exchange() // Send the request
+      .expectStatus().isOk()
+      .expectBody(User.class)
+      .isEqualTo(expectedUser);
+  }
+}
+```
+
+**MockMvc and WebEnvironment End-to-End Test have different syntax.** 
+
+#### TO-BE
+
+MockMvc Test
+```java
+class UserControllerMockBeanTest {
+    
+    // New: RestTestClient is injected and automatically targets the MockMvc context
+    @Autowired 
+    MockMvc mockMvc;
+    
+    @MockitoBean 
+    private UserService userService;
+    
+    private RestTestClient client;
+    @BeforeEach
+    void setup() {
+      this.client = RestTestClient.bindTo(mockMvc).build(); 
+    }
+    @Test
+    void getUserById_RestTestClient() {
+        User expectedUser = new User(1L, "Charlie");
+        
+        // Arrange: Mock the service layer dependency
+        given(userService.findById(1L)).willReturn(expectedUser);
+
+        // Act & Assert (Synchronous, simple chain)
+        client.get().uri("/api/users/{id}", 1L)
+            .exchange() 
+            .expectStatus().isOk()
+            .expectBody(User.class)
+            .isEqualTo(expectedUser); 
+    }
+}
+```
+
+End-To-End test just different in `setup()` method.
+
+```java
+@SpringBootTest
+class UserControllerIntegrationTest {
+    @Autowired 
+    WebApplicationContext context;
+    
+    @Autowired
+    private UserService userService;
+    
+    private RestTestClient client;
+    @BeforeEach
+    void setup(WebApplicationContext context) {
+      this.client = RestTestClient.bindToApplicationContext(context).build(); 
+    }
+    // ..
+}
+```
 
 
 
-
-#### (1) Configuration by `application.yaml`
+#### (1) Configuration by `application
+.yaml`
 ```yaml
 spring:
   mvc:

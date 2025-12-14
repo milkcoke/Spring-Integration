@@ -1,4 +1,4 @@
-package spring.core.beanfind;
+package spring.context.beanfind;
 
 import spring.core.domain.discount.DiscountPolicy;
 import spring.core.domain.discount.FixDiscountPolicy;

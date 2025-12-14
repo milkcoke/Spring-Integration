@@ -1,4 +1,4 @@
-package spring.core.beanfind;
+package spring.context.beanfind;
 
 import spring.core.config.AppConfig;
 import org.junit.jupiter.api.DisplayName;

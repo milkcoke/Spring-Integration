@@ -1,4 +1,4 @@
-package spring.core.beanfind;
+package spring.context.beanfind;
 
 import spring.core.repository.member.MemberRepository;
 import spring.core.repository.member.MemoryMemberRepository;

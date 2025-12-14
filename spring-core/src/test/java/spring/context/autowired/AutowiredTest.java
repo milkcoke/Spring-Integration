@@ -1,4 +1,4 @@
-package spring.core.autowired;
+package spring.context.autowired;
 
 import spring.core.domain.member.Member;
 import org.junit.jupiter.api.Test;

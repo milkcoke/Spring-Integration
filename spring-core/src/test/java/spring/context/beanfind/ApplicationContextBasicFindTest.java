@@ -1,4 +1,4 @@
-package spring.core.beanfind;
+package spring.context.beanfind;
 
 import spring.core.config.AppConfig;
 import spring.core.service.member.MemberService;

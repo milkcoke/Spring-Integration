@@ -1,4 +1,4 @@
-package spring.core.beandefinition;
+package spring.context.beandefinition;
 
 import spring.core.config.AppConfig;
 import org.junit.jupiter.api.DisplayName;

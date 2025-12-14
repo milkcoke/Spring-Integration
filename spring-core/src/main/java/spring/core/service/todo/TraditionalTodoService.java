@@ -1,11 +1,9 @@
 package spring.core.service.todo;
 
 import org.springframework.http.MediaType;
-import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestClient;
 import spring.core.domain.todo.Todo;
 
-@Service
 public class TraditionalTodoService {
   private final RestClient restClient;
 

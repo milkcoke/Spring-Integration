@@ -1,4 +1,4 @@
-package spring.core.autowired;
+package spring.context.autowired;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
