@@ -40,7 +40,7 @@ class TodoBindToApplicationContextTest {
       .returnResult()
       .getResponseBody();
 
-    assertThat(todos).hasSize(1);
-    assertThat(todos.getFirst().title()).isEqualTo("First Todo");
+    assertThat(todos).hasSize(200);
+    assertThat(todos.getFirst().id()).isEqualTo(1L);
   }
 }

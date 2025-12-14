@@ -13,7 +13,7 @@ public class TodoBindToServerTest {
   @LocalServerPort
   private int port;
 
-  RestTestClient client;
+  private RestTestClient client;
 
   @BeforeEach
   void setUp() {
@@ -30,7 +30,7 @@ public class TodoBindToServerTest {
       .exchange()
       .expectStatus().isOk()
       .expectBody(Todo.class)
-      .isEqualTo(new Todo(1L, 1L, "First Todo", true));
+      .isEqualTo(new Todo(1L, 1L, "delectus aut autem", false));
 
   }
 }

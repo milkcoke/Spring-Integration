@@ -139,12 +139,13 @@ public class TodoConfig {
 
 It supports multiple ways to test.
 
-| API                      | When to use            | Test Speed |
-|--------------------------|------------------------|------------|
-| bindToController         | Unit Test              | Fatest     |
-| bindToMockMvc            | Unit Test with mocking | Fast       |
-| bindToApplicationContext | Integration Test       | Slow       |
-| bindToServer             | End To End Test        | Slowest    |
+| Method                   | What it tests           | Test Speed | When to use                                          |
+|--------------------------|-------------------------|------------|------------------------------------------------------|
+| bindToController         | Just your controller    | Fatest     | Just Unit Test controller                            |
+| bindToMockMvc            | Controller + Spring MVC | Fast       | Testing spring validation  with Mocking              |
+| bindToApplicationContext | Full app with no HTTP   | Slow       | Integration test without real protocol communication |
+| bindToServer             | Everything with HTTP    | Slowest    | Complete End-To-End  Test                            |
+
 
 #### AS-IS
 MockMvc Test code like this
@@ -187,14 +188,15 @@ class UserControllerMockMvcTest {
 }
 ```
 
-End to End test like this
+End-To-End test like this
 
 ```java
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 class UserControllerWebTestClientTest {
 
-  @Autowired private WebTestClient webTestClient;
+  @Autowired 
+  private WebTestClient webTestClient;
 
   @Test
   void getUserById_WebTestClient() {
@@ -227,6 +229,7 @@ class UserControllerMockBeanTest {
     private RestTestClient client;
     @BeforeEach
     void setup() {
+      // Register mockMvc
       this.client = RestTestClient.bindTo(mockMvc).build(); 
     }
     @Test
@@ -260,6 +263,7 @@ class UserControllerIntegrationTest {
     private RestTestClient client;
     @BeforeEach
     void setup(WebApplicationContext context) {
+      // Register ApplicationContext
       this.client = RestTestClient.bindToApplicationContext(context).build(); 
     }
     // ..
