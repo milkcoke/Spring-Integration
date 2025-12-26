@@ -323,6 +323,47 @@ It looks at index 1, extracts "v2", and then uses this extracted value to find t
 > ⚠️Without this setting, Spring sees a request URL `(e.g., /api/v1/users)` and an annotation rule (e.g., `@GetMapping(version="v1")`), but it doesn't know where to look in the URL for the "v1" value.
 
 
+### Bean Registrar
+You can programmatically register spring bean implements BeanRegistrar interface.
+
+```java
+public class MessageServiceRegistrar implements BeanRegistrar {
+  @Override
+  public void register(BeanRegistry registry, Environment env) {
+    String messageType = env.getProperty("app.message-type", "email");
+
+    switch (messageType.toLowerCase()) {
+      case "email" -> registry.registerBean(
+        "messageService",
+        EmailMessageService.class,
+        spec -> spec.description("Email Message Service Bean registered via BeanRegistrar")
+      );
+
+      case "sms" -> registry.registerBean(
+        "messageService",
+        SmsMessageService.class,
+        spec -> spec.description("SMS Message Service Bean registered via BeanRegistrar")
+      );
+
+      default -> throw new IllegalArgumentException("Unknown message type " + messageType);
+    }
+  }
+}
+
+```
+
+Just `@Import` the registrar class in configuration.
+
+```java
+@Import(MessageServiceRegistrar.class)
+@Configuration
+public class MessageConfig {
+}
+```
+
+That's all about it.
+
+
 ---
 ## Configuration
 
